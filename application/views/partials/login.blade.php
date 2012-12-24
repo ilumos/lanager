@@ -1,0 +1,1 @@
+<a href="{{ $login_button }}"><img class="pull-right steam-signin" src="img/sits_small.png"></a>
