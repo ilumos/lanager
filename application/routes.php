@@ -37,8 +37,8 @@
 // 	return View::make('home.index');
 // });
 
-Route::controller(Controller::detect());
-Route::get('user', 'user@index');
+Route::get('login', array('as'=>'login', 'uses'=>'user@login'));
+Route::get('/', 'home@index');
 
 /*
 |--------------------------------------------------------------------------
