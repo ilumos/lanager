@@ -9,12 +9,19 @@ class User_Controller extends Base_Controller {
 
 	public function action_login()
 	{
-		$openID = new LightOpenID;
+		$LightOpenId = new LightOpenId;
 		if(Input::has('openid_mode')) {
-			$openID->validate();
-			$identity = $openID->identity;
+			$LightOpenId->validate();
+			$identity = $LightOpenId->identity;
 			$identity = str_replace('http://steamcommunity.com/openid/id/','',$identity);
-			return View::make('home.index')->with('title',$identity);
+			
+			Bundle::start('SteamProfile');
+			$SteamProfile = new SteamProfile($identity);
+			$SteamProfile->fetchProfile();
+
+			var_dump($SteamProfile);
+
+			return View::make('home.index')->with('title',$SteamProfile->getProfileName());
 		} else {
 			return Redirect::home();
 		}

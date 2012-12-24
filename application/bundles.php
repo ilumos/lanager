@@ -37,5 +37,5 @@ return array(
 
 	'docs' => array('handles' => 'docs'),
 	'lightopenid' => array('auto' => true),
-
+	'steamprofile' => array('auto' => true),
 );

@@ -1,4 +1,4 @@
 <?php
 Autoloader::map(array(
-	'LightOpenID' => Bundle::path('lightopenid') . '/libraries/lightopenid.php',
+	'LightOpenId' => Bundle::path('lightopenid') . '/libraries/lightopenid.php',
 ));

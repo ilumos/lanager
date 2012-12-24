@@ -27,12 +27,12 @@ class Base_Controller extends Controller {
 		Asset::add('style', 'css/main.css');
 		parent::__construct();
 
-		// Sign-in button
-		Bundle::start('LightOpenID');
-		$openID = new LightOpenID;
-		$openID->identity = 'http://steamcommunity.com/openid';
-		$openID->returnUrl = URL::to_route('login');
-		$login_button = Cache::remember('login_button', function() use ($openID) {return $openID->authUrl();}, 60*24);
+		//Sign-in button
+		Bundle::start('LightOpenId');
+		$LightOpenId = new LightOpenId;
+		$LightOpenId->identity = 'http://steamcommunity.com/openid';
+		$LightOpenId->returnUrl = URL::to_route('login');
+		$login_button = Cache::remember('login_button', function() use ($LightOpenId) {return $LightOpenId->authUrl();}, 60*24);
 
 		View::share('login_button', $login_button);
 	}
