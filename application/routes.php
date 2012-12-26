@@ -38,7 +38,7 @@
 // });
 
 Route::get('login', array('as'=>'login', 'uses'=>'user@login'));
-Route::get('/', 'home@index');
+Route::get('/', 'shout@index');
 
 /*
 |--------------------------------------------------------------------------
