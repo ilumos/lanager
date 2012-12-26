@@ -1,0 +1,1 @@
+<span class="pull-right"><img src="{{$logged_in_user_avatar_small}}"> {{$logged_in_user}}</span>

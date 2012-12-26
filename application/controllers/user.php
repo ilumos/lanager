@@ -33,6 +33,13 @@ class User_Controller extends Base_Controller {
 			$user->avatar_medium = $SteamProfile->getAvatarMedium();
 			$user->avatar_large = $SteamProfile->getAvatarLarge();
 			$user->save();
+
+			// Start a session
+			Session::put('user_id', $steamId64);
+			Session::put('username', $SteamProfile->getProfileName());
+			Session::put('avatar_small', $SteamProfile->getAvatarSmall());
+			Session::put('avatar_medium', $SteamProfile->getAvatarMedium());
+			Session::put('avatar_large', $SteamProfile->getAvatarLarge());
 		}
 		return Redirect::home();
 	}

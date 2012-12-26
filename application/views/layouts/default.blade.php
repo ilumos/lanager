@@ -41,7 +41,11 @@
 							<li><a href="music">Music</a></li>
 							<li><a href="info">Info</a></li>
 						</ul>
-						@include('partials.login')
+						@if (isset($logged_in_user))
+							@include('partials.logged_in')
+						@else
+							@include('partials.login')
+						@endif
 						<!--  -->
 					</div><!--/.nav-collapse -->
 				</div>
