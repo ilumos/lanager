@@ -43,5 +43,11 @@ class User_Controller extends Base_Controller {
 		}
 		return Redirect::home();
 	}
+	
+	public function action_logout()
+	{
+		Session::flush();
+		return Redirect::home();
+	}
 
 }
