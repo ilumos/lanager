@@ -1,8 +1,8 @@
 <?php
 
-class User extends Eloquent {
+class User extends Aware {
 	
-	public function shout()
+	public function shouts()
 	{
 	  return $this->has_many('Shout');
 	}

@@ -1,9 +1,16 @@
 <?php
-class Shout extends Eloquent {
+class Shout extends Aware {
 
-     public function user()
-     {
-          return $this->belongs_to('User');
-     }
+	/**
+	* Aware validation rules
+	*/
+	public static $rules = array(
+		'content' => 'required|max:140',
+	);
+
+	public function user()
+	{
+		return $this->belongs_to('User');
+	}
 
 }

@@ -55,3 +55,9 @@ ul.dropdown-menu {
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2AE208', endColorstr='#ff19A601', GradientType=0);
 }
+
+
+input {
+  color: #fff !important;
+  background-color: #000  !important;
+}

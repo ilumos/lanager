@@ -30,7 +30,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="/"><img src="img/logo.png"></a>
+					<a class="brand" href="/"><img src="{{ URL::base(); }}/img/logo.png"></a>
 					<div class="nav-collapse collapse">
 						<ul class="nav">
 							<li><a href="events">Events</a></li>
