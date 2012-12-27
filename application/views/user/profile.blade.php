@@ -15,7 +15,19 @@
 	</ul>
 </div>
 <div class="profile_content">
-	<span class="pull-right">{{$steamProfile->getProfileStatus()}}</span>
+	<div class="pull-right" style="text-align: right;">
+	@if(is_numeric($steamProfile->getCurrentGameId()))
+		Currently playing:
+		<br>
+		{{$steamProfile->getCurrentGameName()}}
+		<br>
+		<a href="steam://store/{{$steamProfile->getCurrentGameId()}}" title="View in the Steam Store"><img src="http://cdn.steampowered.com/v/gfx/apps/{{$steamProfile->getCurrentGameId()}}/capsule_184x69.jpg"></a>
+		<br>
+		<a href="steam://connect/{{$steamProfile->getCurrentGameServerIP()}}" title="Connect to this server">{{$steamProfile->getCurrentGameServerIP()}}</a>
+	@else
+		{{$steamProfile->getProfileStatus()}}
+	@endif
+	</div>
 	<h3>Shouts</h3>
 	@include('shout.list')
 </div>
