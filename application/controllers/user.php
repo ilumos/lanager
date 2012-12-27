@@ -4,7 +4,7 @@ class User_Controller extends Base_Controller {
 
 	public function action_index()
 	{
-		return View::make('home.index');
+		//
 	}
 
 	public function action_login()
@@ -59,7 +59,16 @@ class User_Controller extends Base_Controller {
 					->with('title',$user->username)
 					->with('user',$user)
 					->with('steamProfile',$steamProfile)
-					->with('shouts',$user->shouts()->take(10)->get()); // recent shouts
+					->with('shouts',$user->shouts()->order_by('id', 'desc')->take(10)->get()); // recent shouts
+	}
+
+	public function action_list()
+	{
+		$users = User::order_by('username', 'asc')->paginate(10);
+		return View::make('user.list')
+					->with('title','People')
+					->with('users',$users);
+
 	}
 
 

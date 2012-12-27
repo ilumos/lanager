@@ -33,13 +33,13 @@
 					<a class="brand" href="/"><img src="{{ URL::base(); }}/img/logo.png"></a>
 					<div class="nav-collapse collapse">
 						<ul class="nav">
-							<li><a href="events">Events</a></li>
-							<li><a href="ftp://files">Files</a></li>
-							<li><a href="shouts">Shouts</a></li>
-							<li><a href="servers">Servers</a></li>
-							<li><a href="people">People</a></li>
-							<li><a href="music">Music</a></li>
-							<li><a href="info">Info</a></li>
+							<li><a href="/events">Events</a></li>
+							<li><a href="ftp://files" target="_blank">Files</a></li>
+							<li><a href="{{URL::to_route('shouts');}}">Shouts</a></li>
+							<li><a href="/servers">Servers</a></li>
+							<li><a href="{{URL::to_route('people');}}">People</a></li>
+							<li><a href="/music">Music</a></li>
+							<li><a href="/info">Info</a></li>
 						</ul>
 						@if (isset($logged_in_user))
 							@include('partials.logged_in')
