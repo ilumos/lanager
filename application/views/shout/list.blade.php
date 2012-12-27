@@ -1,4 +1,4 @@
-@if (!is_array($shouts))
+@if (empty($shouts->results))
 	<p>No shouts to show!</p>
 @else
 	@foreach ($shouts->results as $shout)
