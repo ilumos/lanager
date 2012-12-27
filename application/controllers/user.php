@@ -59,7 +59,7 @@ class User_Controller extends Base_Controller {
 					->with('title',$user->username)
 					->with('user',$user)
 					->with('steamProfile',$steamProfile)
-					->with('shouts',$user->shouts()->order_by('id', 'desc')->take(10)->get()); // recent shouts
+					->with('shouts',$user->shouts()->order_by('id', 'desc')->paginate(10)); // recent shouts
 	}
 
 	public function action_list()
