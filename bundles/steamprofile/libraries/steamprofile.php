@@ -138,7 +138,7 @@ class SteamProfile {
 	{
 		switch($this->profileStatus)
 		{
-			case 0: return 'Last seen '.$this->lastLogOff;
+			case 0: return 'Last seen '.DateFmt::Format('AGO[ymodhms]', $this->lastLogOff);
 			case 1: return 'Online now';
 			case 2: return 'Online now, busy';
 			case 3: return 'Online now, away';

@@ -40,10 +40,13 @@ return array(
 	'steamprofile' => array('auto' => true),
 	'aware' => array(
 		'autoloads' => array(
-			'map' => array(
-				'Aware' => '(:bundle)/model.php'
-			),
+			'map' => array('Aware' => '(:bundle)/model.php'),
 		)
 	),
+	'datefmt' => array(
+		'autoloads' => array(
+			'map' => array('DateFmt' => '(:bundle)/datefmt.php')
+		)
+	)
 );
 
