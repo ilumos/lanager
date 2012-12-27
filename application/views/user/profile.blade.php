@@ -30,5 +30,6 @@
 	</div>
 	<h3>Shouts</h3>
 	@include('shout.list')
+	<br>
 </div>
 @endsection
