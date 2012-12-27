@@ -1,8 +1,18 @@
 
 
 /* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+	 Author's custom styles
+	 ========================================================================== */
+
+a {
+	color: #19A601;
+}
+
+a:hover {
+	color: #2AE208;
+}
+
+
 
 
 .steam-signin {
@@ -44,20 +54,47 @@ ul.dropdown-menu {
 .dropdown-menu li > a:hover,
 .dropdown-menu li > a:focus,
 .dropdown-submenu:hover > a {
-  color: #ffffff;
-  text-decoration: none;
-  background-color: #21C404;
-  background-image: -moz-linear-gradient(top, #2AE208, #19A601);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2AE208), to(#19A601));
-  background-image: -webkit-linear-gradient(top, #2AE208, #19A601);
-  background-image: -o-linear-gradient(top, #2AE208, #19A601);
-  background-image: linear-gradient(to bottom, #2AE208, #19A601);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2AE208', endColorstr='#ff19A601', GradientType=0);
+	color: #ffffff;
+	text-decoration: none;
+	background-color: #21C404;
+	background-image: -moz-linear-gradient(top, #2AE208, #19A601);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#2AE208), to(#19A601));
+	background-image: -webkit-linear-gradient(top, #2AE208, #19A601);
+	background-image: -o-linear-gradient(top, #2AE208, #19A601);
+	background-image: linear-gradient(to bottom, #2AE208, #19A601);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2AE208', endColorstr='#ff19A601', GradientType=0);
 }
 
 
 input {
-  color: #fff !important;
-  background-color: #000  !important;
+	color: #fff !important;
+	background-color: #000  !important;
+}
+
+
+
+
+
+/* User Profile */
+.profile_header {
+	position: relative;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #222;
+}
+.profile_avatar {
+	vertical-align: bottom;
+}
+
+.profile_username {
+	font-size: 200%;
+}
+
+ul.profile_tools {
+	text-align: right;
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	list-style: none;
 }

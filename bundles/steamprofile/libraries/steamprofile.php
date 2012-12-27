@@ -138,14 +138,29 @@ class SteamProfile {
 	{
 		switch($this->profileStatus)
 		{
-			case 0: return 'Offline';
-			case 1: return 'Online';
-			case 2: return 'Busy';
-			case 3: return 'Away';
-			case 4: return 'Idle';
-			case 5: return 'Looking to trade';
-			case 5: return 'Looking to play';
+			case 0: return 'Last seen '.$this->lastLogOff;
+			case 1: return 'Online now';
+			case 2: return 'Online now, busy';
+			case 3: return 'Online now, away';
+			case 4: return 'Online now, idle';
+			case 5: return 'Online now, looking to trade';
+			case 5: return 'Online now, looking to play';
 		}
+	}
+
+	public function getAddFriendLink()
+	{
+		return 'steam://friends/add/'.$this->steamId64;
+	}
+
+	public function getSendMessageLink()
+	{
+		return 'steam://friends/joinchat/'.$this->steamId64;
+	}
+
+	public function getCommunityProfileLink()
+	{
+		return 'http://www.steamcommunity.com/profiles/'.$this->steamId64;
 	}
 
 }

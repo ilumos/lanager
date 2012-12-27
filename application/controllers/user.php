@@ -47,7 +47,20 @@ class User_Controller extends Base_Controller {
 	public function action_logout()
 	{
 		Session::flush();
-		return Redirect::home();
+		return Redirect::back();
 	}
+
+	public function action_profile($user_id)
+	{
+		$user = User::find($user_id);
+		$steamProfile = new SteamProfile($user_id);
+		$steamProfile->fetchProfile();
+		return View::make('user.profile')
+					->with('title',$user->username)
+					->with('user',$user)
+					->with('steamProfile',$steamProfile)
+					->with('shouts',$user->shouts()->take(10)->get()); // recent shouts
+	}
+
 
 }
