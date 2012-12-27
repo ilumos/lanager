@@ -74,6 +74,10 @@ input {
 
 
 
+.pagination li a {
+	background-color: black !important;
+	border: 1px solid #444 !important;
+}
 
 
 /* User Profile */
@@ -100,8 +104,13 @@ ul.profile_tools {
 }
 
 
+/* games page */
+.game_user_count {
+	padding-left: 10px;
+	padding-right: 10px;
+	font-size: 170%;
+}
 
-.pagination li a {
-	background-color: black !important;
-	border: 1px solid #444 !important;
+.game_name {
+	padding-right: 20px;
 }

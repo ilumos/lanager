@@ -39,8 +39,10 @@
 
 Route::get('login', array('as'=>'login', 'uses'=>'user@login'));
 Route::get('logout', array('as'=>'logout', 'uses'=>'user@logout'));
+Route::get('preferences', array('as'=>'preferences', 'uses'=>'user@preferences'));
 Route::get('shouts', array('as' => 'shouts', 'uses'=>'shout@index'));
 Route::get('people', array('as' => 'people', 'uses'=>'user@list'));
+Route::get('games', array('as' => 'games', 'uses'=>'game@index'));
 Route::get('profile/(:num)', array('as' => 'profile', 'uses'=>'user@profile'));
 Route::post('shout/post', array('before' => 'csrf', 'uses'=>'shout@post'));
 Route::get('/', 'shout@index');

@@ -43,18 +43,37 @@ class SteamProfile {
 		// 
 	}
 
-	public function fetchProfile()
+	private function querySteamApi($request)
 	{
-
 		$apiKey = Config::get('steamprofile::config.api_key');
 		$apiUrl = Config::get('steamprofile::config.api_url');
-
-		$requestUrl = $apiUrl.'ISteamUser/GetPlayerSummaries/v0002/?steamids='.$this->steamId64.'&format=json&key='.$apiKey;
-
+		
+		$requestUrl = $apiUrl.$request.'&format=json&key='.$apiKey;
+		
 		$context = stream_context_create(array('http' => array('header' => 'Host: '.$_SERVER['SERVER_NAME'])));
 		$responseData = file_get_contents($requestUrl, 0, $context);
 		$responseArray = json_decode($responseData,TRUE);
+		return $responseArray;
+	}
+
+	public function fetchProfiles()
+	{
+		if(is_array($this->steamId64))
+		{
+			$this->steamId64 = implode(',', $this->steamId64);
+		} else {
+			return;
+		}
+		$responseArray = $this->querySteamApi('ISteamUser/GetPlayerSummaries/v0002/?steamids='.$this->steamId64);
+		$profiles = $responseArray['response']['players'];
 		
+		return $profiles;
+	}
+
+	public function fetchProfile()
+	{
+
+		$responseArray = $this->querySteamApi('ISteamUser/GetPlayerSummaries/v0002/?steamids='.$this->steamId64);
 		$profile = $responseArray['response']['players'][0];
 
 		$this->profileName = $profile['personaname'];

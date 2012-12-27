@@ -36,6 +36,7 @@
 							<li><a href="/events">Events</a></li>
 							<li><a href="ftp://files" target="_blank">Files</a></li>
 							<li><a href="{{URL::to_route('shouts');}}">Shouts</a></li>
+							<li><a href="{{URL::to_route('games');}}">Games</a></li>
 							<li><a href="/servers">Servers</a></li>
 							<li><a href="{{URL::to_route('people');}}">People</a></li>
 							<li><a href="/music">Music</a></li>
