@@ -11,15 +11,13 @@ class Create_Users_Table {
 	{
 		Schema::table('users', function($table)
 		{
-			$table->create();
-			$table->integer('id')->unsigned();
+			$table->string('id',17);
 			$table->primary('id');
 			$table->string('username');
 			$table->string('avatar_small');
 			$table->string('avatar_medium');
 			$table->string('avatar_large');
-			$table->string('real_name');
-			$table->string('ip');
+			$table->string('ip')->nullable();
 			$table->timestamps();
 		});
 	}

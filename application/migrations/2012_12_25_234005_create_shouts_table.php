@@ -9,22 +9,14 @@ class Create_Shouts_Table {
 	 */
 	public function up()
 	{
-		Schema::table('users', function($table)
+		Schema::create('shouts', function($table)
 		{
-			$table->unique('id');
+			$table->increments('id');
+			$table->string('user_id',17);
+			$table->string('content');
+			$table->timestamps();
+			$table->foreign('user_id')->references('id')->on('users')->on_update('cascade')->on_delete('cascade');
 		});
-		// Manual table creation required for SQLite foreign keys
-		$sql = 'CREATE TABLE "shouts" (
-			"id" INTEGER NULL,
-			"user_id" INTEGER NULL,
-			"content" VARCHAR NULL,
-			"pinned" INTEGER NULL,
-			"created_at" DATE NULL,
-			"updated_at" DATETIME NULL,
-			PRIMARY KEY ("id"),
-			CONSTRAINT shouts_user_id_foreign
-			FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON UPDATE cascade)';
-		DB::query($sql);
 	}
 
 	/**
@@ -34,10 +26,6 @@ class Create_Shouts_Table {
 	 */
 	public function down()
 	{
-		Schema::table('users', function($table)
-		{
-			$table->drop_unique('users_id_unique');
-		});
 		Schema::drop('shouts');
 	}
 
