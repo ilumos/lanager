@@ -4,7 +4,7 @@ class Game_Controller extends Base_Controller {
 
 	public function action_index()
 	{
-		$users = User::all();
+		$users = LANager\User::all();
 
 		if(empty($users))
 		{

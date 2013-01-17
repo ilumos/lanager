@@ -5,7 +5,7 @@ class Shout_Controller extends Base_Controller {
 	public function action_index()
 	{
 		// Show shouts
-		$shouts = Shout::order_by('id', 'desc')->paginate(10);
+		$shouts = LANager\Shout::order_by('id', 'desc')->paginate(10);
 		return View::make('shout.show')
 					->with('title', 'Shouts')
 					->with('shouts', $shouts);
@@ -13,7 +13,7 @@ class Shout_Controller extends Base_Controller {
 
 	public function action_post()
 	{
-		$shout = new Shout(array('content' => Input::get('content')));
+		$shout = new LANager\Shout(array('content' => Input::get('content')));
 		$shout->content = Input::get('content');
 		$shout->user_id = Session::get('user_id');
 		if( $shout->save() )
