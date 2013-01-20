@@ -1,6 +1,8 @@
 @layout('layouts/default')
 @section('content')
 
+<h3>Events</h3>
+
 <?php
 // calculate bounds of timetable
 $timetable['start'] = strtotime(date('Y/m/d H', $timetable['first_event_start']).':00'); // floor earliest event's start time to hour

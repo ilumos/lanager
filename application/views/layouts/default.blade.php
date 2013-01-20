@@ -30,23 +30,52 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="/"><img src="{{ URL::base(); }}/img/logo.png"></a>
+					<a class="brand" href="/"><img src="{{ URL::base(); }}/img/logo.png" alt="LANager Logo"></a>
+
 					<div class="nav-collapse collapse">
 						<ul class="nav">
-							<li><a href="/events">Events</a></li>
-							<li><a href="ftp://files" target="_blank">Files</a></li>
-							<li><a href="{{URL::to_route('shouts');}}">Shouts</a></li>
-							<li><a href="{{URL::to_route('games');}}">Games</a></li>
-							<li><a href="/servers">Servers</a></li>
-							<li><a href="{{URL::to_route('people');}}">People</a></li>
-							<li><a href="/music">Music</a></li>
-							<li><a href="/info">Info</a></li>
+							<li class="dropdown{{ URI::is('events*') ? ' active' : '' }}">
+								<a href="#"
+									class="dropdown-toggle"
+									data-toggle="dropdown">
+									Events
+									<b class="caret"></b>
+								</a> 
+								<ul class="dropdown-menu">
+									<li><a href="{{URL::to_action('event@timetable')}}">Timetable</a></li>
+									<li><a href="{{URL::to_action('event@list')}}">List</a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="ftp://files" target="_blank">Files</a>
+							</li>
+							<li class="{{ URI::is('shouts*') ? 'active' : '' }}">
+								<a href="{{URL::to_route('shouts');}}">Shouts</a>
+							</li>
+							<li class="{{ URI::is('games*') ? 'active' : '' }}">
+								<a href="{{URL::to_route('games');}}">Games</a>
+							</li>
+							<li class="{{ URI::is('servers*') ? 'active' : '' }}">
+								<a href="#">Servers</a></li>
+							<li class="{{ URI::is('people*') ? 'active' : '' }}">
+								<a href="{{URL::to_route('people');}}">People</a>
+							</li>
+							<li class="{{ URI::is('music*') ? 'active' : '' }}">
+								<a href="#">Music</a>
+							</li>
+							<li class="{{ URI::is('info*') ? 'active' : '' }}">
+								<a href="#">Info</a>
+							</li>
 						</ul>
+						<ul class="nav pull-right">
 						@if (isset($logged_in_user))
 							@include('partials.logged_in')
 						@else
 							@include('partials.login')
 						@endif
+						</ul>
+						
+
 						<!--  -->
 					</div><!--/.nav-collapse -->
 				</div>
@@ -54,6 +83,8 @@
 		</div>
 
 		<div class="container">
+
+
 
 			@yield('content')
 
