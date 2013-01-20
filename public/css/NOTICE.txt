@@ -1,0 +1,45 @@
+Copyright 2011 Twitter, Inc.
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or 
+implied. See the License for the specific language governing 
+permissions and limitations under the License.
+
+FAQs
+Boiled down to smaller chunks, Bootstrap's license can be described
+with the following conditions. For context, these are the same FAQs
+that we share internally at Twitter.
+
+It allows you to:
+
+- freely download and use Twitter open source software, in whole or
+  in part, for personal, company internal or commercial purposes
+- use Twitter open source software in packages or distributions 
+  that you create
+
+It forbids you to:
+
+- redistribute any piece of Twitter open source originated software
+  without proper attribution
+- use any marks owned by Twitter in any way that might state or 
+  imply that Twitter endorses your distribution
+- use any marks owned by Twitter in any way that might state or 
+  imply that you created the Twitter software in question
+
+It requires you to:
+
+- include a copy of the license in any redistribution you may make
+  that includes Twitter software
+- provide clear attribution to Twitter for any distributions that
+  include Twitter open source software
+
+It does not require you to:
+
+- include the source of the Twitter software itself, or of any
+  modifications you may have made to it, in any redistribution
+  you may assemble that includes it
+- submit changes that you make to the software back to Twitter
+  (though such feedback is encouraged)
