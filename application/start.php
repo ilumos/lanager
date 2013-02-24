@@ -64,8 +64,8 @@ Autoloader::namespaces( array(
 
 Autoloader::map(array(
 	'Base_Controller' => path('app').'controllers/base.php',
-	'lanager\\Shout' => path('app').'models/lanager/shout.php',
-	'lanager\\User' => path('app').'models/lanager/user.php',
+	'lanager\\Shout' => path('app').'models/lanager/Shout.php',
+	'lanager\\User' => path('app').'models/lanager/User.php',
 ));
 
 /*
