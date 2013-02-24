@@ -1,5 +1,5 @@
 <?php
-namespace lanager;
+namespace LANager;
 use Aware;
 
 class Shout extends Aware {
@@ -13,7 +13,7 @@ class Shout extends Aware {
 
 	public function user()
 	{
-		return $this->belongs_to('lanager\User');
+		return $this->belongs_to('LANager\User');
 	}
 
 }

@@ -1,17 +1,17 @@
 <?php
-namespace lanager;
+namespace LANager;
 use Aware;
 
 class Event extends Aware {
 
      public function type()
      {
-          return $this->has_one('lanager\Event_type');
+          return $this->has_one('LANager\Event_type');
      }
 
      public function manager()
      {
-          return $this->belongs_to('lanager\User');
+          return $this->belongs_to('LANager\User');
      }
 
 

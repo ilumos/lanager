@@ -48,7 +48,7 @@ $aliases = Laravel\Config::get('application.aliases');
 Laravel\Autoloader::$aliases = $aliases;
 
 Autoloader::namespaces( array(
-  'lanager' => path('app') . '/models/lanager'
+  'LANager' => path('models') . 'lanager'
 ));
 
 /*
@@ -64,8 +64,6 @@ Autoloader::namespaces( array(
 
 Autoloader::map(array(
 	'Base_Controller' => path('app').'controllers/base.php',
-	'lanager\\Shout' => path('app').'models/lanager/Shout.php',
-	'lanager\\User' => path('app').'models/lanager/User.php',
 ));
 
 /*
