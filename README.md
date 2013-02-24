@@ -42,9 +42,22 @@ more enjoyable for attendees and organisers alike.
 
 * Download and unzip
 * [Configure your server for Laravel](http://www.laravel.com/docs/install)
+	* [Make the "lanager/public/" directory your site's DocumentRoot](http://www.laravel.com/docs/install#server-configuration) - protecting other Laravel system and configuration files
+	* Set the value of the key option in the config/application.php file to a random, 32 character string
+	* Make the storage/ directory writable (chmod 777 -R lanager/storage/)
+	* Enable mod_rewrite in Apache
+	* Enable .htaccess files in the "lanager/public/" directory for pretty URLs
 * Set up a database and a user
+	* Using "lanager" for both is recommended
 * [Set up and run database migrations](http://www.laravel.com/docs/database/migrations)
+	* Add the PHP binary to your system's PATH ([Windows](http://www.php.net/manual/en/faq.installation.php#faq.installation.addtopath), [Linux/Unix](http://unix.stackexchange.com/questions/26047/how-to-correctly-add-a-path-to-path))
+	* Open a command shell and type "php" to verify that the above step was successful
+	* Change directory (cd) to the lanager directory
+	* Run "php artisan migrate:install" to [prepare the database](http://www.laravel.com/docs/database/migrations#prepping-your-database)
+	* Run "php artisan migrate" to create the database structure
 * [Get an API key from Steam](steamcommunity.com/dev/apikey)
+	* Paste it into the "api_key" variable in "lanager/bundles/steamprofile/config/config.php"
+* Browse to http://localhost/ and enjoy!
 
 
 ## Feedback & Contributions
