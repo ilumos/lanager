@@ -79,7 +79,6 @@ Autoloader::map(array(
 
 Autoloader::directories(array(
 	path('app').'models',
-	path('app').'models\lanager',
 	path('app').'libraries',
 ));
 

@@ -25,7 +25,7 @@ class User_Controller extends Base_Controller {
 			// Create or update user details in database
 			$user = LANager\User::find($steamId64);
 			if($user == NULL) {
-				$user = new User;
+				$user = new LANager\User;
 			}
 			$user->id = $steamId64;
 			$user->username = $SteamProfile->getProfileName();
