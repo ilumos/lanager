@@ -48,7 +48,7 @@ $aliases = Laravel\Config::get('application.aliases');
 Laravel\Autoloader::$aliases = $aliases;
 
 Autoloader::namespaces( array(
-  'LANager' => path('models') . 'lanager'
+  'LANager' => path('app') . 'models/lanager'
 ));
 
 /*
