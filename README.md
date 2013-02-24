@@ -43,7 +43,7 @@ more enjoyable for attendees and organisers alike.
 * Download and unzip
 * [Configure your server for Laravel](http://www.laravel.com/docs/install)
 * Set up a database and a user
-* [Set up and run database migrations](http://www.laravel.com/docs/database/migrations#running-migrations)
+* [Set up and run database migrations](http://www.laravel.com/docs/database/migrations)
 * [Get an API key from Steam](steamcommunity.com/dev/apikey)
 
 
