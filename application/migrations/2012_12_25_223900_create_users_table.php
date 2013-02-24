@@ -9,7 +9,7 @@ class Create_Users_Table {
 	 */
 	public function up()
 	{
-		Schema::table('users', function($table)
+		Schema::create('users', function($table)
 		{
 			$table->string('id',17);
 			$table->primary('id');
