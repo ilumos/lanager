@@ -23,7 +23,7 @@ class User_Controller extends Base_Controller {
 			$SteamProfile->fetchProfile();
 
 			// Create or update user details in database
-			$user = LANager\User::find($steamId64);
+			$user = lanager\User::find($steamId64);
 			if($user == NULL) {
 				$user = new User;
 			}
@@ -52,7 +52,7 @@ class User_Controller extends Base_Controller {
 
 	public function action_profile($user_id)
 	{
-		$user = LANager\User::find($user_id);
+		$user = lanager\User::find($user_id);
 		$steamProfile = new SteamProfile($user_id);
 		$steamProfile->fetchProfile();
 		return View::make('user.profile')
@@ -64,7 +64,7 @@ class User_Controller extends Base_Controller {
 
 	public function action_list()
 	{
-		$users = LANager\User::order_by('username', 'asc')->paginate(10);
+		$users = lanager\User::order_by('username', 'asc')->paginate(10);
 		return View::make('user.list')
 					->with('title','People')
 					->with('users',$users);
