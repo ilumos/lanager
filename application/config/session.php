@@ -57,7 +57,7 @@ return array(
 	|
 	*/
 
-	'lifetime' => 60,
+	'lifetime' => 5760, // 4 days - length of an average event
 
 	/*
 	|--------------------------------------------------------------------------
