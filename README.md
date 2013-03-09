@@ -47,6 +47,7 @@ more enjoyable for attendees and organisers alike.
 	* Make the storage/ directory writable (chmod 777 -R lanager/storage/)
 	* Enable mod_rewrite in Apache
 	* Enable .htaccess files in the "lanager/public/" directory for pretty URLs
+	* Enable php_openssl in PHP
 * Set up a database and a user
 	* Using "lanager" for both is recommended
 * [Set up and run database migrations](http://www.laravel.com/docs/database/migrations)
