@@ -10,7 +10,7 @@ class Game_Controller extends Base_Controller {
 		{
 			return View::make('game.popular')
 						->with('title', 'Games')
-						->with('error', 'No users in the database to check.');
+						->with('games', null);
 		}
 
 		// Collect all user IDs
@@ -32,7 +32,7 @@ class Game_Controller extends Base_Controller {
 		{
 			return View::make('game.popular')
 						->with('title', 'Games')
-						->with('error', 'Nobody\'s playing any games! What kind of LAN party is this!?');
+						->with('games', null);
 		}
 
 		// Make a list of all games being played

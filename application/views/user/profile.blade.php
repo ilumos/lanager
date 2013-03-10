@@ -2,7 +2,7 @@
 @section('content')
 <div class="profile_header">
 	<img class="profile_avatar" src="{{$user->avatar_large}}">
-	<span class="profile_username">{{$user->username}}</span>
+	<span class="profile_username">{{e($user->username)}}</span>
 	<ul class="profile_tools">
 		@if($user->id == Session::get('user_id'))
 			<li><a href="{{$steamProfile->getCommunityProfileLink()}}/edit" target="_blank">Edit Profile</a></li>
@@ -19,13 +19,13 @@
 	@if(is_numeric($steamProfile->getCurrentGameId()))
 		Currently playing:
 		<br>
-		{{$steamProfile->getCurrentGameName()}}
+		{{e($steamProfile->getCurrentGameName())}}
 		<br>
 		<a href="steam://store/{{$steamProfile->getCurrentGameId()}}" title="View in the Steam Store"><img src="http://cdn.steampowered.com/v/gfx/apps/{{$steamProfile->getCurrentGameId()}}/capsule_184x69.jpg"></a>
 		<br>
 		<a href="steam://connect/{{$steamProfile->getCurrentGameServerIP()}}" title="Connect to this server">{{$steamProfile->getCurrentGameServerIP()}}</a>
 	@else
-		{{$steamProfile->getProfileStatus()}}
+		{{e($steamProfile->getProfileStatus())}}
 	@endif
 	</div>
 	<h3>Shouts</h3>
