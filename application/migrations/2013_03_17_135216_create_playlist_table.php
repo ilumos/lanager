@@ -12,10 +12,11 @@ class Create_Playlist_Table {
 		
 		Schema::create('playlist_entries', function($table)
 		{
-			$table->increments('id');
+			$table->string('id',11);
+			$table->primary('id');
 			$table->string('user_id',17);
 			$table->string('title');
-			$table->string('location');
+			$table->boolean('played');
 			$table->timestamps();
 			$table->foreign('user_id')->references('id')->on('users')->on_update('cascade')->on_delete('cascade');
 		});

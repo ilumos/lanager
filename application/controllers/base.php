@@ -21,6 +21,7 @@ class Base_Controller extends Controller {
 		Asset::add('modernizr', 'js/vendor/modernizr-2.6.2-respond-1.1.0.min.js');
 		Asset::add('bootstrap-js', 'js/vendor/bootstrap.min.js');
 		Asset::add('main', 'js/main.js');
+		Asset::add('swfobject', 'js/swfobject.js');
 
 		Asset::add('bootstrap', 'css/bootstrap.css');
 		Asset::add('bootstrap-responsive', 'css/bootstrap-responsive.min.css');

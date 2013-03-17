@@ -46,6 +46,8 @@ Route::get('events', array('as' => 'events', 'uses'=>'event@list'));
 Route::get('events/timetable', array('as' => 'events', 'uses'=>'event@timetable'));
 Route::get('games', array('as' => 'games', 'uses'=>'game@index'));
 Route::get('playlist', array('as' => 'playlist', 'uses'=>'playlist@index'));
+Route::get('playlist/screen', array('as' => 'playlist', 'uses'=>'playlist@screen'));
+Route::get('playlist/next', array('as' => 'playlist', 'uses'=>'playlist@next'));
 Route::get('profile/(:num)', array('as' => 'profile', 'uses'=>'user@profile'));
 Route::post('shout/post', array('before' => 'csrf', 'uses'=>'shout@post'));
 Route::get('/', 'shout@index');
