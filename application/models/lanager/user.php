@@ -9,4 +9,9 @@ class User extends Aware {
 	  return $this->has_many('LANager\Shout');
 	}
 
+	public function playlist_entries()
+	{
+	  return $this->has_many('LANager\Playlist_entry');
+	}
+
 }

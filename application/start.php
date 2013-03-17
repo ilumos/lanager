@@ -64,6 +64,7 @@ Autoloader::namespaces( array(
 
 Autoloader::map(array(
 	'Base_Controller' => path('app').'controllers/base.php',
+	'LANager\\Playlist_entry' => path('app') . 'models/lanager/playlist_entry.php',
 ));
 
 /*

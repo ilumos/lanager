@@ -56,12 +56,13 @@
 								<a href="{{URL::to_route('games');}}">Games</a>
 							</li>
 							<li class="{{ URI::is('servers*') ? 'active' : '' }}">
-								<a href="#">Servers</a></li>
+								<a href="#">Servers</a>
+							</li>
 							<li class="{{ URI::is('people*') ? 'active' : '' }}">
 								<a href="{{URL::to_route('people');}}">People</a>
 							</li>
-							<li class="{{ URI::is('music*') ? 'active' : '' }}">
-								<a href="#">Music</a>
+							<li class="{{ URI::is('playlist*') ? 'active' : '' }}">
+								<a href="{{URL::to_route('playlist');}}">Playlist</a>
 							</li>
 							<li class="{{ URI::is('info*') ? 'active' : '' }}">
 								<a href="#">Info</a>
