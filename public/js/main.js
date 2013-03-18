@@ -3,6 +3,7 @@
 function onYouTubePlayerReady(playerId) {
 	yt_player = document.getElementById("player_id");
 	console.log('YouTube video player ready!');
+	yt_player.setPlaybackQuality('highres');
 	yt_player.playVideo();
 	yt_player.addEventListener("onStateChange", "onStateChangeHandler");
 }
@@ -23,6 +24,7 @@ function enqueueNextVideo(videoId) {
 	{
 		console.log('Loading next video: '+videoId);
 		yt_player.cueVideoById(videoId);
+		yt_player.setPlaybackQuality('highres');
 		yt_player.playVideo();
 	}
 	else
