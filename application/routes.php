@@ -73,7 +73,7 @@ Route::get('shouts',
 	));
 Route::post('shout/post',
 	array(
-		'before' => 'csrf',
+		'before' => 'csrf|logged_in',
 		'uses'=>'shout@post',
 	));
 
@@ -102,6 +102,12 @@ Route::get('playlist',
 		'as' => 'playlist',
 		'uses'=>'playlist@index',
 	));
+Route::post('playlist/add_entry', array(
+		'before' => 'csrf|logged_in',
+		'as' => 'playlist',
+		'uses'=>'playlist@add_entry',
+	));
+
 Route::get('playlist/screen',
 	array(
 		'before' => 'auth_playlist_screen',
@@ -186,9 +192,9 @@ Route::filter('csrf', function()
 	if (Request::forged()) return Response::error('500');
 });
 
-Route::filter('auth', function()
+Route::filter('logged_in', function()
 {
-	if (Auth::guest()) return Redirect::to('login');
+	if( !Session::has('username') ) return Response::error('403');
 });
 
 // Only allow the defined user to view the playlist screen

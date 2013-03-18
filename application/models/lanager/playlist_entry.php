@@ -7,9 +7,10 @@ class Playlist_entry extends Aware {
 	/**
 	* Aware validation rules
 	*/
-	// public static $rules = array(
-	// 	'content' => 'required|max:140',
-	// );
+	public static $rules = array(
+		'title' => 'required',
+	);
+
 	public static $table = 'playlist_entries';
 
 	public function user()

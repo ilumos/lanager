@@ -1,11 +1,11 @@
 <?php
 
-// Show post shout form to logged in users
+// Show add video form to logged in users
 if( Session::has('username') )
 {
-	echo Form::open('/shout/post');
+	echo Form::open('/playlist/add_entry');
 	echo Form::token();
-	echo Form::text('content',NULL,array('placeholder' => 'What\'s going on?', 'maxlength' => 140));
+	echo Form::text('url',NULL,array('placeholder' => 'Paste a YouTube video URL here', 'maxlength' => 240));
 
 	if(Session::has('errors'))
 	{
