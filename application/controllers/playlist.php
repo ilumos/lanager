@@ -14,9 +14,9 @@ class Playlist_Controller extends Base_Controller {
 	public function action_screen()
 	{ 
 		$playlist_first_entry = LANager\Playlist_entry::where('played', '=', 0)->first();
-		return View::make('playlist.screen')
-					->with('title', 'Playlist Screen')
-					->with('playlist_first_entry', $playlist_first_entry);
+			return View::make('playlist.screen')
+						->with('title', 'Playlist Screen')
+						->with('playlist_first_entry', $playlist_first_entry);
 	}
 
 	public function action_next()

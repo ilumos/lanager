@@ -37,19 +37,85 @@
 // 	return View::make('home.index');
 // });
 
-Route::get('login', array('as'=>'login', 'uses'=>'user@login'));
-Route::get('logout', array('as'=>'logout', 'uses'=>'user@logout'));
-Route::get('preferences', array('as'=>'preferences', 'uses'=>'user@preferences'));
-Route::get('shouts', array('as' => 'shouts', 'uses'=>'shout@index'));
-Route::get('people', array('as' => 'people', 'uses'=>'user@list'));
-Route::get('events', array('as' => 'events', 'uses'=>'event@list'));
-Route::get('events/timetable', array('as' => 'events', 'uses'=>'event@timetable'));
-Route::get('games', array('as' => 'games', 'uses'=>'game@index'));
-Route::get('playlist', array('as' => 'playlist', 'uses'=>'playlist@index'));
-Route::get('playlist/screen', array('as' => 'playlist', 'uses'=>'playlist@screen'));
-Route::get('playlist/next', array('as' => 'playlist', 'uses'=>'playlist@next'));
-Route::get('profile/(:num)', array('as' => 'profile', 'uses'=>'user@profile'));
-Route::post('shout/post', array('before' => 'csrf', 'uses'=>'shout@post'));
+
+// User ----------------------------------------------
+Route::get('login',
+	array(
+		'as'=>'login',
+		'uses'=>'user@login',
+	));
+Route::get('logout',
+	array(
+		'as'=>'logout',
+		'uses'=>'user@logout',
+	));
+Route::get('preferences',
+	array(
+		'as'=>'preferences',
+		'uses'=>'user@preferences',
+	));
+Route::get('people',
+	array('as' => 'people',
+		'uses'=>'user@list',
+	));
+
+Route::get('profile/(:num)',
+	array(
+		'as' => 'profile',
+		'uses'=>'user@profile',
+	));
+
+// Shouts --------------------------------------------
+Route::get('shouts',
+	array(
+		'as' => 'shouts',
+		'uses'=>'shout@index',
+	));
+Route::post('shout/post',
+	array(
+		'before' => 'csrf',
+		'uses'=>'shout@post',
+	));
+
+// Events --------------------------------------------
+Route::get('events',
+	array(
+		'as' => 'events',
+		'uses'=>'event@list',
+	));
+Route::get('events/timetable',
+	array(
+		'as' => 'events',
+		'uses'=>'event@timetable',
+	));
+
+// Games ---------------------------------------------
+Route::get('games',
+	array(
+		'as' => 'games',
+		'uses'=>'game@index',
+	));
+
+// Playlist ------------------------------------------
+Route::get('playlist',
+	array(
+		'as' => 'playlist',
+		'uses'=>'playlist@index',
+	));
+Route::get('playlist/screen',
+	array(
+		'before' => 'auth_playlist_screen',
+		'as' => 'playlist', 
+		'uses'=>'playlist@screen',
+	));
+Route::get('playlist/next', array(
+		'before' => 'auth_playlist_screen',
+		'as' => 'playlist',
+		'uses'=>'playlist@next',
+	));
+
+
+// Index
 Route::get('/', 'shout@index');
 
 /*
@@ -123,4 +189,10 @@ Route::filter('csrf', function()
 Route::filter('auth', function()
 {
 	if (Auth::guest()) return Redirect::to('login');
+});
+
+// Only allow the defined user to view the playlist screen
+Route::filter('auth_playlist_screen',function()
+{
+	if(Config::get('lanager.playlist_screen_allowed_user') != Session::get('user_id')) return Redirect::to('playlist');
 });

@@ -1,13 +1,15 @@
+/* Youtube Screen */
+
 function onYouTubePlayerReady(playerId) {
-	ytplayer = document.getElementById("player_id");
+	yt_player = document.getElementById("player_id");
 	console.log('YouTube video player ready!');
-	ytplayer.playVideo();
-  	ytplayer.addEventListener("onStateChange", "onStateChangeHandler");
+	yt_player.playVideo();
+	yt_player.addEventListener("onStateChange", "onStateChangeHandler");
 }
 
 function onStateChangeHandler(newState) {
 	console.log("Player's new state: " + newState);
-	if(newState == 0)
+	if(newState == 0) // Video ended
 	{
 		$.get('http://localhost/playlist/next', function(data) {
 		enqueueNextVideo(data);
@@ -16,16 +18,15 @@ function onStateChangeHandler(newState) {
 	}
 }
 
-
 function enqueueNextVideo(videoId) {
 	if(videoId)
 	{
 		console.log('Loading next video: '+videoId);
-		ytplayer.cueVideoById(videoId);
-		ytplayer.playVideo();
+		yt_player.cueVideoById(videoId);
+		yt_player.playVideo();
 	}
 	else
 	{
-		ytplayer.stopVideo();
+		yt_player.stopVideo();
 	}
 }
