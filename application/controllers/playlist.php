@@ -18,26 +18,30 @@ class Playlist_Controller extends Base_Controller {
 						->with('title', 'Playlist Screen');
 	}
 
-	public function action_next()
+	public function action_next($last_played_video_id = NULL)
 	{
-		$playlist_last_entry = LANager\Playlist_entry::where('played', '=', 0)->order_by('created_at', 'desc')->first();
-		
-		if(!empty($playlist_last_entry))
+		if(!empty($last_played_video_id))
 		{
-			// Mark last video as played
-			$playlist_entry = LANager\Playlist_entry::find($playlist_last_entry->id);
-			$playlist_entry->played = true;
-			$playlist_entry->save();
-			
-			$playlist_next_entry = LANager\Playlist_entry::where('played', '=', 0)->order_by('created_at', 'desc')->first();
-			if(!empty($playlist_next_entry))
-			{
-				return $playlist_next_entry->id;
-			}
-			else
-			{
-				return;
-			}
+			// mark the video that was last playing as played
+			$mark_last_video_as_played = DB::table('playlist_entries')
+											->where('id', '=', $last_played_video_id)
+											->update(array('playback_state' => 2));
+		}
+
+		// get the currently playing video OR the next unplayed video
+		$playlist_next_entry = LANager\Playlist_entry::where('playback_state', '=', 1)
+													->or_where('playback_state', '=', 0)
+													->order_by('playback_state', 'desc') // use now playing video if there is one
+													->order_by('created_at', 'asc')
+													->first();
+		if(!empty($playlist_next_entry))
+		{
+			// mark it as "now playing"
+			$mark_current_video_as_playing = DB::table('playlist_entries')
+											->where('id', '=', $playlist_next_entry->id)
+											->update(array('playback_state' => 1));
+			// return its id
+			return $playlist_next_entry->id;
 		}
 		else
 		{

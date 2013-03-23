@@ -114,7 +114,7 @@ Route::get('playlist/screen',
 		'as' => 'playlist', 
 		'uses'=>'playlist@screen',
 	));
-Route::get('playlist/next', array(
+Route::get('playlist/next/(:all)', array(
 		'before' => 'auth_playlist_screen',
 		'as' => 'playlist',
 		'uses'=>'playlist@next',

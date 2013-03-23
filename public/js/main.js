@@ -3,9 +3,13 @@
 var nextVideoId;
 
 function getNextVideoId() {
+	if(nextVideoId)
+	{
+		console.log('Playlist: Sending last played video ID to be marked as played: '+nextVideoId);
+	}
 	console.log('Playlist: Retrieving next video ID');
 	jQuery.ajax({
-		url:    'http://localhost/playlist/next',
+		url:    'http://localhost/playlist/next/'+nextVideoId, // pass last played video id for marking as played
 		success: function(result) {
 			nextVideoId = result;
 			console.log('Playlist: Success - retrieved next video ID: '+nextVideoId);
