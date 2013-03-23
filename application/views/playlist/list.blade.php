@@ -6,10 +6,14 @@
 @endif
 
 @forelse ($playlist_entries->results as $entry)
-	<a href="{{URL::to_action('user@profile',$entry->user->id)}}">
-		<img src="{{$entry->user->avatar_small}}" title="{{ e($entry->user->username) }}">
-	</a> 
-	<a href="{{ e($entry->location) }}">{{ e($entry->title) }}</a><br>
+	<a href="{{URL::to_action('user@profile',$entry->user->id)}}"><img src="{{$entry->user->avatar_small}}" title="{{ e($entry->user->username) }}"></a>
+	&nbsp;
+	@if($entry->playback_state == 1)
+		<strong>Now Playing: </strong> {{ e($entry->title) }}<br><br>
+	@else
+		{{ e($entry->title) }}<br>
+	@endif
+	
 @empty
 	<p>No entries to show!</p>
 @endforelse

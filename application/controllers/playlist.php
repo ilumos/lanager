@@ -5,7 +5,9 @@ class Playlist_Controller extends Base_Controller {
 	public function action_index()
 	{
 		// Show playlist
-		$playlist_entries = LANager\Playlist_entry::order_by('created_at', 'desc')->paginate(50);
+		$playlist_entries = LANager\Playlist_entry::where('playback_state', '=', 1)
+												->or_where('playback_state', '=', 0)
+												->order_by('created_at', 'asc')->paginate(50);
 		return View::make('playlist.show')
 					->with('title', 'Playlist')
 					->with('playlist_entries', $playlist_entries);
