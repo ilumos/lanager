@@ -1,103 +1,92 @@
+var nowPlayingId;
+var currentPlaybackState;
+
+// Called when player loaded for first time
 function onYouTubePlayerReady(playerId)
 {
 	yt_player = document.getElementById('player_id');
 	console.log('Playlist: Embedded video player ready');
+	pollPlaylist();
 	yt_player.setPlaybackQuality('highres');
 	yt_player.addEventListener('onStateChange', 'onStateChangeHandler');
-	yt_player.playVideo();
-	console.log('Playlist: Playing first video');
+	yt_player.addEventListener('onError', 'onErrorHandler');
 }
 
-var nowPlayingId;
-var currentPlaybackState;
-
-function pollPlaylist(firstCall)
+// Poll database for next item or pausing
+function pollPlaylist()
 {
 	var url = 'http://localhost/playlist/get_entry';
 	
-	// Getting the first video ID for the embed code
-	if(firstCall)
+	console.log('Playlist: Polling...');
+	$.getJSON(url,function(entry)
 	{
-		console.log('Playlist: Retreiving first entry');
-		$.ajax({
-			url: url,
-			dataType: 'json',
-			async: false,
-	  		success: function(entry)
-	  		{
-				console.log('Playlist: Entry '+entry.id+' set as first video');
-				nowPlayingId = entry.id;
-			},
-			error: function(response)
-			{
-				console.log('Playlist: Polling error: '+response);
-			}
-		});
-	}
-	else // Checking for the next video or pausing
-	{
-		$.getJSON(url,function(entry)
+		if(entry)
 		{
-			console.log('Playlist: Polling for changes');
 			// new entry, or entry skipped/deleted
 			if(entry.id != nowPlayingId)
 			{
-				console.log('Playlist: Changing to entry: '+entry.id);
-				loadAndPlayEntry(entry.id);
+				console.log('Playlist: Polling: Entry retrieved: '+entry.id);
+				nowPlayingId = entry.id; // update now playing var
+				loadEntry(entry.id); // load the new video
 			}
 			if(entry.playback_state != currentPlaybackState)
 			{
 				switch(entry.playback_state)
 				{
+					case 0: // unplayed
+						console.log('Playlist: Polling: Staring playback of unplayed entry');
+						yt_player.playVideo();
+						currentPlaybackState = 1;
+						break;				
 					case 1: // playing
-						console.log('Playlist: Entry '+entry.id+' setting state to "playing"');
+						console.log('Playlist: Polling: Staring playback');
 						yt_player.playVideo();
 						currentPlaybackState = 1;
 						break;
 					case 2: // paused
-						console.log('Playlist: Entry '+entry.id+' setting state to "paused"');
+						console.log('Playlist: Polling: Pausing playback');
 						yt_player.pauseVideo();
 						currentPlaybackState = 2;
 						break;
 				}
 			}
-		});
-	}
+		}
+	});
 	setTimeout(pollPlaylist,2000);
 }
 
-
-function loadAndPlayEntry(videoId)
+// Load a video ID into the player
+function loadEntry(videoId)
 {
-	if(videoId)
-	{
-		console.log('Playlist: Entry '+videoId+' loading and playing');
-		yt_player.cueVideoById(videoId);
-		yt_player.setPlaybackQuality('highres');
-		yt_player.playVideo();
-		currentPlaybackState = 1;
-		nowPlayingId = videoId;
-		markEntry(videoId,1);
-	}
-	else
-	{
-		yt_player.stopVideo();
-		currentPlaybackState = 4;
-	}
+	console.log('Playlist: Entry '+videoId+' loading');
+	yt_player.loadVideoById(videoId);
+	yt_player.setPlaybackQuality('highres'); // request best available quality
 }
 
+// Feed back a video's playback state to the database
 function markEntry(videoId, playbackState, playbackStateLabel)
 {
 	if(videoId)
 	{
-		console.log('Playlist: Entry '+videoId+' marking as '+playbackStateLabel+' ('+playbackState+')');
 		$.get('http://localhost/playlist/mark_entry/'+videoId+'/'+playbackState, function(response) {
-			console.log('Playlist: Entry '+videoId+' marking response: '+response+' rows affected ('+playbackStateLabel+')');
+			if(response == 1)
+			{
+				console.log('Playlist: Entry '+videoId+' marked as '+playbackStateLabel);
+			}
+			else
+			{
+				console.log('Playlist: Entry '+videoId+' already marked as '+playbackStateLabel);
+			}
 		});
 	}
 }
 
+// Perform actions based on player's state changing, e.g. when last video stopped, load the next one
 function onStateChangeHandler(newState) {
+	if(!nowPlayingId)
+	{
+		nowPlayingId = '(empty)';
+	}
 	switch(newState)
 	{
 		case -1:
@@ -124,4 +113,10 @@ function onStateChangeHandler(newState) {
 			console.log('Playlist: Entry '+nowPlayingId+' has been cued ('+newState+')');
 			break;
 	}
+}
+
+// Display errors
+function onErrorHandler(errorNum)
+{
+	console.log('Playlist: Player error: '+errorNum);
 }

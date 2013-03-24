@@ -5,14 +5,11 @@
 	</div>
 
 	<script type="text/javascript">
-		// Load first video
-		pollPlaylist(true);
-
-		var params = { allowScriptAccess: "always" , allowFullScreen: "true"};
+		var params = { allowScriptAccess: "always"};
 		var atts = { id: "player_id" };
 		swfobject.embedSWF(
-			"http://www.youtube.com/v/"+nowPlayingId+"?enablejsapi=1&playerapiid=ytplayer&version=3&iv_load_policy=3",
-			"player_display", "1024", "800", "8", null, null, params, atts);
+			"http://www.youtube.com/apiplayer?version=3&enablejsapi=1&playerapiid=yt_player&iv_load_policy=3",
+			"player_display", "960", "600", "8", null, null, params, atts);
 	</script>
 
 @endsection
