@@ -95,6 +95,7 @@ class Playlist_Controller extends Base_Controller {
 	{
 		// Show playlist history
 		$playlist_entries = LANager\Playlist_entry::where('playback_state', '=', 4)
+												->or_where('playback_state', '=', 3)
 												->order_by('created_at', 'asc')->paginate(50);
 		return View::make('playlist.history')
 					->with('title', 'Playlist')
@@ -107,7 +108,7 @@ class Playlist_Controller extends Base_Controller {
 		DB::table('playlist_entries')
 			->where('playback_state', '=', 1) // playing
 			->update(array('playback_state' => 2)); // set to paused
-		return Redirect::to_route('playlist');
+		return Redirect::back();
 	}
 
 	// Play the currently paused item
@@ -116,7 +117,7 @@ class Playlist_Controller extends Base_Controller {
 		DB::table('playlist_entries')
 			->where('playback_state', '=', 2) // paused
 			->update(array('playback_state' => 1)); // set to playing
-		return Redirect::to_route('playlist');
+		return Redirect::back();
 	}
 
 	// Skip the currently playing item
@@ -126,7 +127,14 @@ class Playlist_Controller extends Base_Controller {
 			->where('playback_state', '=', 1) // playing
 			->or_where('playback_state', '=', 2) // paused
 			->update(array('playback_state' => 3)); // set to skipped
-		return Redirect::to_route('playlist');
+		return Redirect::back();
+	}
+
+	// Skip the currently playing item
+	public function action_delete_entry($entry_id)
+	{
+		DB::table('playlist_entries')->where('id', '=', $entry_id)->delete();
+		return Redirect::back();
 	}
 
 }
