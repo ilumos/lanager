@@ -5,7 +5,7 @@ if( Session::has('username') )
 {
 	echo Form::open('/playlist/add_entry');
 	echo Form::token();
-	echo Form::text('url',NULL,array('placeholder' => 'Paste a YouTube video URL here', 'maxlength' => 240));
+	echo Form::text('url',NULL,array('placeholder' => 'Paste a YouTube video URL here', 'id' => 'playlist_entry_url'));
 
 	if(Session::has('errors'))
 	{

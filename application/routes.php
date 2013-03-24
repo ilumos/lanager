@@ -107,6 +107,10 @@ Route::post('playlist/add_entry', array(
 		'as' => 'playlist',
 		'uses'=>'playlist@add_entry',
 	));
+Route::get('playlist/history', array(
+		'as' => 'playlist',
+		'uses'=>'playlist@history',
+	));
 
 Route::get('playlist/screen',
 	array(

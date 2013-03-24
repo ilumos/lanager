@@ -90,4 +90,15 @@ class Playlist_Controller extends Base_Controller {
 					->update(array('playback_state' => $playback_state));
 	}
 
+
+	public function action_history()
+	{
+		// Show playlist history
+		$playlist_entries = LANager\Playlist_entry::where('playback_state', '=', 4)
+												->order_by('created_at', 'asc')->paginate(50);
+		return View::make('playlist.history')
+					->with('title', 'Playlist')
+					->with('playlist_entries', $playlist_entries);
+	}
+
 }

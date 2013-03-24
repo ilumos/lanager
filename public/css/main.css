@@ -220,3 +220,10 @@ ul.profile_tools {
 	font-weight: bold;
 	background: #19A601;
 }
+
+
+/* playlist display page */
+
+input#playlist_entry_url {
+	width: 500px;
+}
