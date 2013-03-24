@@ -8,4 +8,6 @@
 	<br>
 @endif
 @include('playlist.list')
+<br>
+<a href="{{URL::to_action('playlist@history')}}">See History</a>
 @endsection
