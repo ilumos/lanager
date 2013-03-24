@@ -1,5 +1,8 @@
 @layout('layouts/default')
 @section('content')
+	<div id="now_playing">
+
+	</div>
 	<div id="player_display">
 		You need Flash player 8+ and JavaScript enabled to view this video.
 	</div>

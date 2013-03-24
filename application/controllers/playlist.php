@@ -69,7 +69,8 @@ class Playlist_Controller extends Base_Controller {
 		//  - currently playing video
 		//  - currently paused video
 		//  - next unplayed video
-		$playlist_entry = LANager\Playlist_entry::where('playback_state', '=', 2) // paused
+		$playlist_entry = LANager\Playlist_entry::with('user')
+												->where('playback_state', '=', 2) // paused
 												->or_where('playback_state', '=', 1) // playing
 												->or_where('playback_state', '=', 0) // unplayed
 												->order_by('playback_state', 'desc') // order: paused, playing, unplayed

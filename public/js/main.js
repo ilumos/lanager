@@ -28,6 +28,7 @@ function pollPlaylist()
 				console.log('Playlist: Polling: Entry retrieved: '+entry.id);
 				nowPlayingId = entry.id; // update now playing var
 				loadEntry(entry.id); // load the new video
+				updateNowPlaying(entry); // update now playing display
 			}
 			if(entry.playback_state != currentPlaybackState)
 			{
@@ -118,4 +119,11 @@ function onStateChangeHandler(newState) {
 function onErrorHandler(errorNum)
 {
 	console.log('Playlist: Player error: '+errorNum);
+}
+
+function updateNowPlaying(entry)
+{
+	console.log('Playlist: Updating now playing display');
+	nowPlaying = '<img src="'+entry.user.avatar_small+'"> '+entry.user.username+': <strong>'+entry.title+'</strong>';
+	$('div#now_playing').html(nowPlaying);
 }
