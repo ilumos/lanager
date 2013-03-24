@@ -14,7 +14,9 @@ class Change_Playback_Fields {
 		{
 			// 0 - unplayed
 			// 1 - playing
-			// 2 - played
+			// 2 - paused
+			// 3 - skipped
+			// 4 - played
 			$table->drop_column('played');
 			$table->integer('playback_state')->default(0);
 		});

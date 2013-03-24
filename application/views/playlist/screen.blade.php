@@ -6,12 +6,12 @@
 
 	<script type="text/javascript">
 		// Load first video
-		getNextVideoId();
+		pollPlaylist(true);
 
 		var params = { allowScriptAccess: "always" , allowFullScreen: "true"};
 		var atts = { id: "player_id" };
 		swfobject.embedSWF(
-			"http://www.youtube.com/v/"+nextVideoId+"?enablejsapi=1&playerapiid=ytplayer&version=3&iv_load_policy=3",
+			"http://www.youtube.com/v/"+nowPlayingId+"?enablejsapi=1&playerapiid=ytplayer&version=3&iv_load_policy=3",
 			"player_display", "1024", "800", "8", null, null, params, atts);
 	</script>
 

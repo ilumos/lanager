@@ -13,44 +13,6 @@ class Playlist_Controller extends Base_Controller {
 					->with('playlist_entries', $playlist_entries);
 	}
 
-	public function action_screen()
-	{ 
-			// Show screen - first video loaded in javascript
-			return View::make('playlist.screen')
-						->with('title', 'Playlist Screen');
-	}
-
-	public function action_next($last_played_video_id = NULL)
-	{
-		if(!empty($last_played_video_id))
-		{
-			// mark the video that was last playing as played
-			$mark_last_video_as_played = DB::table('playlist_entries')
-											->where('id', '=', $last_played_video_id)
-											->update(array('playback_state' => 2));
-		}
-
-		// get the currently playing video OR the next unplayed video
-		$playlist_next_entry = LANager\Playlist_entry::where('playback_state', '=', 1)
-													->or_where('playback_state', '=', 0)
-													->order_by('playback_state', 'desc') // use now playing video if there is one
-													->order_by('created_at', 'asc')
-													->first();
-		if(!empty($playlist_next_entry))
-		{
-			// mark it as "now playing"
-			$mark_current_video_as_playing = DB::table('playlist_entries')
-											->where('id', '=', $playlist_next_entry->id)
-											->update(array('playback_state' => 1));
-			// return its id
-			return $playlist_next_entry->id;
-		}
-		else
-		{
-			return;
-		}
-	}
-
 	public function action_add_entry()
 	{
 		
@@ -90,6 +52,42 @@ class Playlist_Controller extends Base_Controller {
 		{
 			return Redirect::back()->with('errors',$playlist_entry->errors->all());
 		}
+	}
+
+
+	public function action_screen()
+	{ 
+			// Show screen - first video loaded in javascript
+			return View::make('playlist.screen')
+						->with('title', 'Playlist Screen');
+	}
+
+	// Get current playlist entry and its playback state
+	public function action_get_entry()
+	{
+		// get either
+		//  - currently playing video
+		//  - currently paused video
+		//  - next unplayed video
+		$playlist_entry = LANager\Playlist_entry::where('playback_state', '=', 2) // paused
+												->or_where('playback_state', '=', 1) // playing
+												->or_where('playback_state', '=', 0) // unplayed
+												->order_by('playback_state', 'desc') // order: paused, playing, unplayed
+												->order_by('created_at', 'asc') // secondary order: oldest to newest
+												->first();
+		if(!empty($playlist_entry))
+		{
+			// return entry
+			return Response::eloquent($playlist_entry);
+		}
+	}
+
+	// Mark entry as playing/played/paused
+	public function action_mark_entry($entry_id,$playback_state)
+	{
+		return DB::table('playlist_entries')
+					->where('id', '=', $entry_id)
+					->update(array('playback_state' => $playback_state));
 	}
 
 }
