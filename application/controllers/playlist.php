@@ -101,4 +101,32 @@ class Playlist_Controller extends Base_Controller {
 					->with('playlist_entries', $playlist_entries);
 	}
 
+	// Pause the currently playing item
+	public function action_pause()
+	{
+		DB::table('playlist_entries')
+			->where('playback_state', '=', 1) // playing
+			->update(array('playback_state' => 2)); // set to paused
+		return Redirect::to_route('playlist');
+	}
+
+	// Play the currently paused item
+	public function action_play()
+	{
+		DB::table('playlist_entries')
+			->where('playback_state', '=', 2) // paused
+			->update(array('playback_state' => 1)); // set to playing
+		return Redirect::to_route('playlist');
+	}
+
+	// Skip the currently playing item
+	public function action_skip()
+	{
+		DB::table('playlist_entries')
+			->where('playback_state', '=', 1) // playing
+			->or_where('playback_state', '=', 2) // paused
+			->update(array('playback_state' => 3)); // set to skipped
+		return Redirect::to_route('playlist');
+	}
+
 }

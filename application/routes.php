@@ -130,6 +130,23 @@ Route::get('playlist/mark_entry/(:all)/(:num)', array(
 		'uses'=>'playlist@mark_entry',
 	));
 
+Route::get('playlist/pause', array(
+		'before' => 'auth_playlist_screen',
+		'as' => 'playlist',
+		'uses'=>'playlist@pause',
+	));
+
+Route::get('playlist/play', array(
+		'before' => 'auth_playlist_screen',
+		'as' => 'playlist',
+		'uses'=>'playlist@play',
+	));
+
+Route::get('playlist/skip', array(
+		'before' => 'auth_playlist_screen',
+		'as' => 'playlist',
+		'uses'=>'playlist@skip',
+	));
 
 // Index
 Route::get('/', 'shout@index');
