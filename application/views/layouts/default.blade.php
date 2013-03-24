@@ -11,6 +11,9 @@
 		<meta name="viewport" content="width=device-width">
 		{{ Asset::styles() }}
 		{{ Asset::scripts() }}
+		<script type="text/javascript">
+			var siteUrl = '{{ URL::base(); }}';
+		</script>
 		<style>
 			body {
 				padding-top: 60px;

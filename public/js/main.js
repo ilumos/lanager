@@ -15,7 +15,7 @@ function onYouTubePlayerReady(playerId)
 // Poll database for next item or pausing
 function pollPlaylist()
 {
-	var url = 'http://localhost/playlist/get_entry';
+	var url = siteUrl+'/playlist/get_entry';
 	
 	console.log('Playlist: Polling...');
 	$.getJSON(url,function(entry)
@@ -69,7 +69,7 @@ function markEntry(videoId, playbackState, playbackStateLabel)
 {
 	if(videoId)
 	{
-		$.get('http://localhost/playlist/mark_entry/'+videoId+'/'+playbackState, function(response) {
+		$.get(siteUrl+'/playlist/mark_entry/'+videoId+'/'+playbackState, function(response) {
 			if(response == 1)
 			{
 				console.log('Playlist: Entry '+videoId+' marked as '+playbackStateLabel);
