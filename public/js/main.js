@@ -98,12 +98,10 @@ function onStateChangeHandler(newState) {
 			break;
 		case 1:
 			console.log('Playlist: Entry '+nowPlayingId+' is now playing ('+newState+')');
-			markEntry(nowPlayingId, 1, 'playing'); // mark the last video as playing
 			currentPlaybackState = 1;
 			break;
 		case 2:
 			console.log('Playlist: Entry '+nowPlayingId+' is now paused ('+newState+')');
-			markEntry(nowPlayingId, 2, 'paused'); // mark the last video as paused
 			currentPlaybackState = 2;
 			break;
 		case 3:
