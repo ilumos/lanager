@@ -1,4 +1,5 @@
 var nowPlayingId;
+var nowPlayingUniqueId;
 var currentPlaybackState;
 
 // Called when player loaded for first time
@@ -23,11 +24,12 @@ function pollPlaylist()
 		if(entry)
 		{
 			// new entry, or entry skipped/deleted
-			if(entry.id != nowPlayingId)
+			if(entry.video_id != nowPlayingId)
 			{
-				console.log('Playlist: Polling: Entry retrieved: '+entry.id);
-				nowPlayingId = entry.id; // update now playing var
-				loadEntry(entry.id); // load the new video
+				console.log('Playlist: Polling: Entry retrieved: '+entry.video_id+' (uid:'+entry.id+')');
+				nowPlayingId = entry.video_id; // update now playing var
+				nowPlayingUniqueId = entry.id; // set the unique video id
+				loadEntry(entry.video_id); // load the new video
 				updateNowPlaying(entry); // update now playing display
 			}
 			if(entry.playback_state != currentPlaybackState)
@@ -35,17 +37,17 @@ function pollPlaylist()
 				switch(entry.playback_state)
 				{
 					case 0: // unplayed
-						console.log('Playlist: Polling: Staring playback of unplayed entry');
+						console.log('Playlist: Polling: Staring playback of unplayed entry '+entry.video_id+' (uid:'+entry.id+')');
 						yt_player.playVideo();
 						currentPlaybackState = 1;
 						break;				
 					case 1: // playing
-						console.log('Playlist: Polling: Staring playback');
+						console.log('Playlist: Polling: Staring playback of '+entry.video_id+' (uid:'+entry.id+')');
 						yt_player.playVideo();
 						currentPlaybackState = 1;
 						break;
 					case 2: // paused
-						console.log('Playlist: Polling: Pausing playback');
+						console.log('Playlist: Polling: Pausing playback of '+entry.video_id+' (uid:'+entry.id+')');
 						yt_player.pauseVideo();
 						currentPlaybackState = 2;
 						break;
@@ -59,24 +61,24 @@ function pollPlaylist()
 // Load a video ID into the player
 function loadEntry(videoId)
 {
-	console.log('Playlist: Entry '+videoId+' loading');
+	console.log('Playlist: Entry '+videoId+' loading (uid:'+nowPlayingUniqueId+')');
 	yt_player.loadVideoById(videoId);
 	yt_player.setPlaybackQuality('highres'); // request best available quality
 }
 
 // Feed back a video's playback state to the database
-function markEntry(videoId, playbackState, playbackStateLabel)
+function markEntry(uniqueVideoId, playbackState, playbackStateLabel, videoId)
 {
 	if(videoId)
 	{
-		$.get(siteUrl+'/playlist/mark_entry/'+videoId+'/'+playbackState, function(response) {
+		$.get(siteUrl+'/playlist/mark_entry/'+uniqueVideoId+'/'+playbackState, function(response) {
 			if(response == 1)
 			{
-				console.log('Playlist: Entry '+videoId+' marked as '+playbackStateLabel);
+				console.log('Playlist: Entry '+videoId+' (uid:'+uniqueVideoId+') marked as '+playbackStateLabel);
 			}
 			else
 			{
-				console.log('Playlist: Entry '+videoId+' already marked as '+playbackStateLabel);
+				console.log('Playlist: Entry '+videoId+' (uid:'+uniqueVideoId+') already marked as '+playbackStateLabel);
 			}
 		});
 	}
@@ -91,26 +93,26 @@ function onStateChangeHandler(newState) {
 	switch(newState)
 	{
 		case -1:
-			console.log('Playlist: Entry '+nowPlayingId+' is unstarted ('+newState+')');
+			console.log('Playlist: Entry '+nowPlayingId+' (uid:'+nowPlayingUniqueId+') is unstarted ('+newState+')');
 			break;
 		case 0:
-			console.log('Playlist: Entry '+nowPlayingId+' has ended ('+newState+')');
-			markEntry(nowPlayingId, 4, 'played'); // mark the last video as played
+			console.log('Playlist: Entry '+nowPlayingId+' (uid:'+nowPlayingUniqueId+') has ended (4 / '+newState+')');
+			markEntry(nowPlayingUniqueId, 4, 'played', nowPlayingId); // mark the last video as played
 			break;
 		case 1:
-			console.log('Playlist: Entry '+nowPlayingId+' is now playing ('+newState+')');
-			markEntry(nowPlayingId, 1, 'playing'); // mark the last video as playing
+			console.log('Playlist: Entry '+nowPlayingId+' (uid:'+nowPlayingUniqueId+') is now playing ('+newState+')');
+			markEntry(nowPlayingUniqueId, 1, 'playing', nowPlayingId); // mark the last video as playing
 			currentPlaybackState = 1;
 			break;
 		case 2:
-			console.log('Playlist: Entry '+nowPlayingId+' is now paused ('+newState+')');
-			currentPlaybackState = 2;
+			console.log('Playlist: Entry '+nowPlayingId+' (uid:'+nowPlayingUniqueId+') is now paused ('+newState+')');
+			// currentPlaybackState = 2; // removed due to YT player pausing just before video end and messing up script flow
 			break;
 		case 3:
-			console.log('Playlist: Entry '+nowPlayingId+' is now buffering ('+newState+')');
+			console.log('Playlist: Entry '+nowPlayingId+' (uid:'+nowPlayingUniqueId+') is now buffering ('+newState+')');
 			break;
 		case 5:
-			console.log('Playlist: Entry '+nowPlayingId+' has been cued ('+newState+')');
+			console.log('Playlist: Entry '+nowPlayingId+' (uid:'+nowPlayingUniqueId+') has been cued ('+newState+')');
 			break;
 	}
 }

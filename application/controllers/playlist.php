@@ -40,7 +40,7 @@ class Playlist_Controller extends Base_Controller {
 			return Redirect::back()->with('errors',array(0=>'Error retrieving requested video'));
 		}
 
-		$playlist_entry = new LANager\Playlist_entry(array('id' => $youtube_url['v']));
+		$playlist_entry = new LANager\Playlist_entry(array('video_id' => $youtube_url['v']));
 		$playlist_entry->title = (string) $youtube_xml->title;
 		$playlist_entry->user_id = Session::get('user_id');
 
@@ -57,7 +57,7 @@ class Playlist_Controller extends Base_Controller {
 
 	public function action_screen()
 	{ 
-			// Show screen - first video loaded in javascript
+			// Show screen - all videos loaded via javascript
 			return View::make('playlist.screen')
 						->with('title', 'Playlist Screen');
 	}
@@ -78,7 +78,7 @@ class Playlist_Controller extends Base_Controller {
 												->first();
 		if(!empty($playlist_entry))
 		{
-			// return entry
+			// return entry as JSON
 			return Response::eloquent($playlist_entry);
 		}
 	}
@@ -131,7 +131,7 @@ class Playlist_Controller extends Base_Controller {
 		return Redirect::back();
 	}
 
-	// Skip the currently playing item
+	// Delete the specified item
 	public function action_delete_entry($entry_id)
 	{
 		DB::table('playlist_entries')->where('id', '=', $entry_id)->delete();
