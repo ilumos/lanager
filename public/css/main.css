@@ -81,12 +81,13 @@ ul.dropdown-menu {
 }
 
 
-input {
-	color: #fff !important;
-	background-color: #000  !important;
+input, textarea {
+	width: 500px;
 }
 
-
+select {
+	width: 514px;
+}
 
 .pagination li a {
 	background-color: black !important;
