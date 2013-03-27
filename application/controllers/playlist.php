@@ -33,7 +33,9 @@ class Playlist_Controller extends Base_Controller {
 		$response = curl_exec($ch);
 		curl_close($ch);
 
-		if ($response) {
+		libxml_use_internal_errors(true); // supress errors
+		if(simplexml_load_string($response))
+		{
 			$youtube_xml = new SimpleXMLElement($response);
 			$title = (string) $youtube_xml->title;
 		} else {
