@@ -28,4 +28,15 @@ class Event_Controller extends Base_Controller {
 					->with('events',$events);
 	}
 
+	public function action_create()
+	{
+		$event_types = LANager\Event_type::order_by('name', 'asc')->lists('name','name');
+		$managers = LANager\User::order_by('username', 'asc')->lists('username','id');
+		//print_r($event_types);
+		return View::make('event.form')
+					->with('title','Create Event')
+					->with('event_types',$event_types)
+					->with('managers',$managers);
+	}
+
 }

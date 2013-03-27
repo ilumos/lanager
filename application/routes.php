@@ -88,6 +88,11 @@ Route::get('events/timetable',
 		'as' => 'events',
 		'uses'=>'event@timetable',
 	));
+Route::get('events/create',
+	array(
+		'as' => 'events',
+		'uses'=>'event@create',
+	));
 
 // Games ---------------------------------------------
 Route::get('games',
