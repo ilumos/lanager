@@ -252,3 +252,26 @@ Route::filter('auth_playlist_screen',function()
 {
 	if(Config::get('lanager.playlist_screen_allowed_user') != Session::get('user_id')) return Redirect::to('playlist');
 });
+
+
+
+
+
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| View Composers
+|--------------------------------------------------------------------------
+*/
+
+
+
+// Info dropdown, to show top level info pages
+View::composer(array('partials.info'), function($view)
+{
+    $view->with('children', LANager\Info::where_null('parent_id')->get());
+
+});

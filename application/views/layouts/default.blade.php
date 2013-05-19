@@ -67,9 +67,8 @@
 							<li class="{{ URI::is('playlist*') ? 'active' : '' }}">
 								<a href="{{URL::to_route('playlist');}}">Playlist</a>
 							</li>
-							<li class="{{ URI::is('info*') ? 'active' : '' }}">
-								<a href="{{URL::to_route('info');}}">Info</a>
-							</li>
+							@include('partials.info')
+
 						</ul>
 						<ul class="nav pull-right">
 						@if (isset($logged_in_user))
