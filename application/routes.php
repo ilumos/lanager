@@ -101,6 +101,13 @@ Route::get('games',
 		'uses'=>'game@index',
 	));
 
+// Info ---------------------------------------------
+Route::get('info/(:num)',
+	array(
+		'as' => 'info',
+		'uses'=>'info@index',
+	));
+
 // Playlist ------------------------------------------
 Route::get('playlist',
 	array(
