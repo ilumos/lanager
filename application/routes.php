@@ -102,10 +102,16 @@ Route::get('games',
 	));
 
 // Info ---------------------------------------------
-Route::get('info/(:num)',
+Route::get('info',
 	array(
 		'as' => 'info',
 		'uses'=>'info@index',
+	));
+
+Route::get('info/display/(:num)',
+	array(
+		'as' => 'info',
+		'uses'=>'info@display',
 	));
 
 // Playlist ------------------------------------------

@@ -68,7 +68,7 @@
 								<a href="{{URL::to_route('playlist');}}">Playlist</a>
 							</li>
 							<li class="{{ URI::is('info*') ? 'active' : '' }}">
-								<a href="#">Info</a>
+								<a href="{{URL::to_route('info');}}">Info</a>
 							</li>
 						</ul>
 						<ul class="nav pull-right">

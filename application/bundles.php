@@ -35,7 +35,7 @@
 
 return array(
 
-	'docs' => array('handles' => 'docs'),
+	//'docs' => array('handles' => 'docs'),
 	'lightopenid' => array('auto' => true),
 	'steamprofile' => array('auto' => true),
 	'aware' => array(
@@ -47,6 +47,8 @@ return array(
 		'autoloads' => array(
 			'map' => array('DateFmt' => '(:bundle)/datefmt.php')
 		)
-	)
+	),
+	'sparkdown' => array('handles' => 'sparkdown'),
+
 );
 
