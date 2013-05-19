@@ -114,6 +114,13 @@ Route::get('info/display/(:num)',
 		'uses'=>'info@display',
 	));
 
+// Files ---------------------------------------------
+Route::get('files',
+	array(
+		'as' => 'files',
+		'uses'=>'files@index',
+	));
+
 // Playlist ------------------------------------------
 Route::get('playlist',
 	array(

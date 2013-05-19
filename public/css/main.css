@@ -13,6 +13,11 @@ a:hover {
 }
 
 
+.dotted-underline, .dotted-underline:hover {
+	text-decoration: none;
+	color: #fff;
+	border-bottom: 1px dotted #777;
+}
 
 
 .steam-signin {
@@ -228,3 +233,6 @@ ul.profile_tools {
 input#playlist_entry_url {
 	width: 500px;
 }
+
+
+

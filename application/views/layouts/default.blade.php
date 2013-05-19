@@ -13,7 +13,10 @@
 		{{ Asset::scripts() }}
 		<script type="text/javascript">
 			var siteUrl = '{{ URL::base(); }}';
-		</script>
+			$(document).ready(function () {
+				$("[rel=tooltip]").tooltip();
+			});
+  		</script>
 		<style>
 			body {
 				padding-top: 60px;
@@ -49,8 +52,8 @@
 									<li><a href="{{URL::to_action('event@list')}}">List</a></li>
 								</ul>
 							</li>
-							<li>
-								<a href="ftp://files" target="_blank">Files</a>
+							<li class="{{ URI::is('files*') ? 'active' : '' }}">
+								<a href="{{URL::to_route('files');}}">Files</a>
 							</li>
 							<li class="{{ URI::is('shouts*') ? 'active' : '' }}">
 								<a href="{{URL::to_route('shouts');}}">Shouts</a>

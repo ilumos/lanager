@@ -66,6 +66,7 @@ Autoloader::map(array(
 	'Base_Controller' => path('app').'controllers/base.php',
 	'LANager\\Playlist_entry' => path('app') . 'models/lanager/playlist_entry.php',
 	'LANager\\Event_type' => path('app') . 'models/lanager/event_type.php',
+	'LANager\\File_location' => path('app') . 'models/lanager/file_location.php',
 ));
 
 /*
