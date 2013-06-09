@@ -45,6 +45,8 @@ foreach($events as $event)
 
 }
 
+$rows_spanned = 0;
+
 // create timetable, one row at a time
 for ($i = 0; $i <= $timetable['total_rows']; $i++)
 {
