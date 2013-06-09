@@ -21,11 +21,8 @@ if(!empty($events))
 	// calculate the total number of hours the timetable will be rendering
 	$timetable['total_hours'] = ceil(abs($timetable['start'] - $timetable['end']) / 3600);
 
-	// set the time in seconds each row should represent
-	$timetable['time_per_row'] = 3600/2;
-
 	// calculate number of rows required to render the entire timetable
-	$timetable['total_rows'] = ($timetable['total_hours'] * 3600) / $timetable['time_per_row'];
+	$timetable['total_rows'] = ($timetable['total_hours'] * 3600) / Config::get('lanager.timetable_time_per_row');
 
 
 
@@ -52,7 +49,7 @@ foreach($events as $event)
 for ($i = 0; $i <= $timetable['total_rows']; $i++)
 {
 	// calculate the time marking we're at by adding (1 row's time * loop number) to the start time
-	$timetable['current_row_time'] = $timetable['start'] + ($i * $timetable['time_per_row']);
+	$timetable['current_row_time'] = $timetable['start'] + ($i * Config::get('lanager.timetable_time_per_row'));
 
 	// if the current row time is on an hour
 	if(($timetable['current_row_time'] % 3600) == 0)
@@ -76,7 +73,7 @@ for ($i = 0; $i <= $timetable['total_rows']; $i++)
 		if(array_key_exists($timetable['current_row_time'], $events_array))
 		{
 			// calculate rows required for the event's length
-			$rows_spanned = (strtotime($events_array[$timetable['current_row_time']]['end'])-$timetable['current_row_time'])/$timetable['time_per_row'];
+			$rows_spanned = (strtotime($events_array[$timetable['current_row_time']]['end'])-$timetable['current_row_time'])/Config::get('lanager.timetable_time_per_row');
 
 			echo '<td class="title" rowspan="'.$rows_spanned.'">'.$events_array[$timetable['current_row_time']]['title'].'</td>';
 			echo '<td class="description" rowspan="'.$rows_spanned.'">'.$events_array[$timetable['current_row_time']]['description'].'</td>';
