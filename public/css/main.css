@@ -137,97 +137,6 @@ ul.profile_tools {
 
 
 
-
-
-
-
-
-
-
-
-/* event timetable page */
-
-.timetableTableContainer {
-	width: 750px; /* determines width of timetable bg/guides */
-	position: relative;
-}
-
-.timetableTable {
-	width: 100%;
-	min-width: 750px; /* should be set to width of .timetableTableContainer */
-}
-
-#timetableLabel {
-	width: 54px;
-}
-
-.hourCell {
-	width: 15px;
-	height: 87px; /* 4x(.minCell height+padding+border)-1     currently 4x(17+2+2+1)-1 -> 4x(22)-1 */ 
-	float: left;
-	text-align: right;
-	padding-left: 7px;
-}
-
-.hourCell p {
-	font-size: 1em;
-	padding: 2px 0 0 0;
-	margin: 0;
-}
-
-.minCell {
-	height: 18px;
-	padding: 2px 0 2px 0;
-	border-bottom: none;
-	border-right: 1px solid #000; /* separate label and events */
-}
-
-.timetableGuide {
-	height: 18px;
-	padding: 2px 0 2px 0;
-}
-
-.rowA {
-	background-color: #333;
-}
-
-.rowALabel {
-	background-color: #444;
-}
-
-.eventContainer {
-	position: absolute;
-	top: 0px;
-	left: 44px; /* set to width of #timetableLabel */
-	min-width: 702px; /* determines width of events */
-}
-
-.event {
-	position: absolute;
-	width: 680px; /* set to (.timetableTableContainer width - self padding - #timetableLabel) */
-	left: 57px;
-	padding: 16px 4px 2px 4px;
-	font-size: 11px;
-	font-weight: normal;
-	color: #fff;
-	overflow: auto;
-	letter-spacing: -.5px;
-	line-height: 12px;
-	border: 1px solid #2AE208;
-	background-color: #178301;
-}
-
-.eventHeader {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 14px;
-	font-weight: bold;
-	background: #19A601;
-}
-
-
 /* playlist display page */
 
 input#playlist_entry_url {
@@ -236,3 +145,46 @@ input#playlist_entry_url {
 
 
 
+
+
+
+/* event timetable */
+table#timetable {
+	width: 100%;
+}
+table#timetable th {
+	padding-right: 8px;
+	text-align: right;
+	width: 5%;
+	position: relative;
+	top: -11px;
+}
+
+table#timetable th.day {
+	color: red;
+}
+
+table#timetable td.day {
+	border-top: 1px solid red;
+}
+
+table#timetable td {
+	border-top: 1px solid #444;
+}
+
+
+table#timetable td.title {
+	text-align: center;
+	width: 15%;  
+	font-weight: bold;
+	font-size: large;
+}
+
+
+table#timetable td.title, table#timetable td.description {
+	background-color:rgba(0,255,0,0.1);
+}
+
+table#timetable td.current {
+	background-color:rgba(0,255,0,0.2);
+}

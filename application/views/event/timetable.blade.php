@@ -7,87 +7,101 @@
 
 if(!empty($events))
 {
-
 	// calculate bounds of timetable
-	$timetable['start'] = strtotime(date('Y/m/d H', $timetable['first_event_start']).':00'); // floor earliest event's start time to hour
-	$timetable['end'] = strtotime(date('Y/m/d H', $timetable['last_event_end']).':00')+3600; // floor latest event's end time to hour & add 1 hour
 
+	// floor earliest event's start time to hour
+	$timetable['start'] = strtotime(date('Y/m/d H', $timetable['first_event_start']).':00'); 
+
+	// floor latest event's end time to hour
+	$timetable['end'] = strtotime(date('Y/m/d H', $timetable['last_event_end']).':00');
+	
 	// get the hour the timetable must start on
 	$timetable['start_hour'] = date('H',$timetable['start']);
 
+	// calculate the total number of hours the timetable will be rendering
 	$timetable['total_hours'] = ceil(abs($timetable['start'] - $timetable['end']) / 3600);
 
-	// calculate number of 15 min blocks required
-	$timetable['total_blocks'] = ($timetable['total_hours'] * 4) + 3; // add 3 for last hour's blocks
+	// set the time in seconds each row should represent
+	$timetable['time_per_row'] = 3600/2;
 
-	?>
+	// calculate number of rows required to render the entire timetable
+	$timetable['total_rows'] = ($timetable['total_hours'] * 3600) / $timetable['time_per_row'];
 
-	<div class="timetableTableContainer">
-		<table cellpadding="0" cellspacing="0" border="0" class="timetableTable">
-		<tbody>
-		<tr>
-			<td id="timetableLabel">
 
-	@for ($i = 0; $i <= $timetable['total_hours']; $i++)
-				<div class="hourCell">
-					<p>{{(($i+$timetable['start_hour'])%24)}}</p>
-				</div>
-				<div class="minCell rowALabel">
-					:00
-				</div>
-				<div class="minCell">
-					:15
-				</div>
-				<div class="minCell rowALabel">
-					:30
-				</div>
-				<div class="minCell">
-					:45
-				</div>
-	@endfor
-			</td>
 
-			<td>
-				<div>
-	@for ($i = 0; $i <= $timetable['total_blocks']; $i++)
-					@if ($i % 2 == 0 OR $i == 0)
-						<div class="timetableGuide rowA">
-							&nbsp;
-						</div>
-					@else
-						<div class="timetableGuide">
-							&nbsp;
-						</div>
-					@endif
-	@endfor
-				</div>
-			</td>
+?>
 
-	<?php
-	foreach ($events as $event)
+<table id="timetable">
+<tbody>
+
+<?php
+
+$i = 0;
+
+foreach($events as $event)
+{
+	$events_array_temp[$i] = $event->to_array();
+
+	$events_array[strtotime($events_array_temp[$i]['start'])] = $events_array_temp[$i];
+
+	$i++;
+
+}
+
+// create timetable, one row at a time
+for ($i = 0; $i <= $timetable['total_rows']; $i++)
+{
+	// calculate the time marking we're at by adding (1 row's time * loop number) to the start time
+	$timetable['current_row_time'] = $timetable['start'] + ($i * $timetable['time_per_row']);
+
+	// if the current row time is on an hour
+	if(($timetable['current_row_time'] % 3600) == 0)
 	{
-			$hour_start = date('g:i a',strtotime($event->start));
-			$hour_end = date('g:i a',strtotime($event->end));
+		// generate a label for the top row
+		$timetable['row_time_label'] = date('ga',$timetable['current_row_time']);
+	}
+	else
+	{
+		$timetable['row_time_label'] = '&nbsp;';
+	}
 
-			$shrink = 8;
+	// set a flag if midnight has been passed
+	$timetable['row_new_day'] = (($timetable['current_row_time'] % 86400) == 0) ? ' class="day"' : NULL;
 
-			$top = 22 * ((strtotime($event->start) - $timetable['start']) / 900) + ($shrink/2);
-			$height = (22 *((strtotime($event->end) - strtotime($event->start)) / 900))-20 - $shrink ;
+	echo '
+	<tr>
+		<th>'.$timetable['row_time_label'].'</th>';
 
-			echo '<div class="event" style="top:'.$top.'px; height:'.$height.'px;"> 
-				<div class="eventHeader">
-					&nbsp;'.$hour_start.' - '.$hour_end.'
-				</div>
-				 <h4>'.$event->title.'</h4>
-				 <br>
-			</div>';
+		// if there is an event at this time
+		if(array_key_exists($timetable['current_row_time'], $events_array))
+		{
+			// calculate rows required for the event's length
+			$rows_spanned = (strtotime($events_array[$timetable['current_row_time']]['end'])-$timetable['current_row_time'])/$timetable['time_per_row'];
+
+			echo '<td class="title" rowspan="'.$rows_spanned.'">'.$events_array[$timetable['current_row_time']]['title'].'</td>';
+			echo '<td class="description" rowspan="'.$rows_spanned.'">'.$events_array[$timetable['current_row_time']]['description'].'</td>';
 		}
-	?>
 
-		</tr>
-		</tbody>
-		</table>
-	</div>
+		// if empty tds need to be inserted (no rows spanning over the space)
+		if($rows_spanned == 0) {
+			echo '
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			';
+		}
+
+	echo '</tr>';
+	
+	// decrement the rows spanned variable as we have filled a row
+	if($rows_spanned > 0) {
+		$rows_spanned--;
+	}
+
+}
+?>
+
+</tbody>
+</table>
 
 <?php
 
