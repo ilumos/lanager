@@ -81,11 +81,6 @@ Route::post('shout/post',
 Route::get('events',
 	array(
 		'as' => 'events',
-		'uses'=>'event@list',
-	));
-Route::get('events/timetable',
-	array(
-		'as' => 'events',
 		'uses'=>'event@timetable',
 	));
 Route::get('events/create',

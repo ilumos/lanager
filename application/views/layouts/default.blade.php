@@ -40,17 +40,8 @@
 
 					<div class="nav-collapse collapse">
 						<ul class="nav">
-							<li class="dropdown{{ URI::is('events*') ? ' active' : '' }}">
-								<a href="#"
-									class="dropdown-toggle"
-									data-toggle="dropdown">
-									Events
-									<b class="caret"></b>
-								</a> 
-								<ul class="dropdown-menu">
-									<li><a href="{{URL::to_action('event@timetable')}}">Timetable</a></li>
-									<li><a href="{{URL::to_action('event@list')}}">List</a></li>
-								</ul>
+							<li class="{{ URI::is('events*') ? 'active' : '' }}">
+								<a href="{{URL::to_route('events');}}">Events</a>
 							</li>
 							<li class="{{ URI::is('files*') ? 'active' : '' }}">
 								<a href="{{URL::to_route('files');}}">Files</a>
