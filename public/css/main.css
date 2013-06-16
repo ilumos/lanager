@@ -188,3 +188,13 @@ table#timetable td.event_name, table#timetable td.event_description {
 table#timetable td.current {
 	background-color:rgba(0,255,0,0.2);
 }
+
+
+/* event create */
+div.bootstrap-datetimepicker-widget {
+	color: #000;
+}
+
+div#start_datetimepicker input, div#end_datetimepicker input {
+	width: 216px;
+}
