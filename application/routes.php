@@ -90,7 +90,7 @@ Route::get('events/create',
 	));
 Route::post('events/create',
 	array(
-		'before' => 'csrf|logged_in',
+		'before' => 'csrf',
 		'uses'=>'event@post_create',
 	));
 // Games ---------------------------------------------

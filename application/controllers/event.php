@@ -28,16 +28,20 @@ class Event_Controller extends Base_Controller {
 
 	public function action_post_create()
 	{
-		$shout = new LANager\Event(array('content' => Input::get('content')));
-		$shout->content = Input::get('content');
-		$shout->user_id = Session::get('user_id');
-		if( $shout->save() )
+		$event = new LANager\Event;
+		$event->name 		= Input::get('name');
+		$event->description = Input::get('description');
+		$event->start 		= date('Y-m-d H:i:s',strtotime(str_replace('/', '-', Input::get('start'))));
+		$event->end 		= date('Y-m-d H:i:s',strtotime(str_replace('/', '-', Input::get('end'))));
+		$event->type 		= Input::get('type', NULL);
+		$event->manager 	= Input::get('manager', NULL);
+		if( $event->save() )
 		{
-			return Redirect::to_route('shouts');
+			return Redirect::to_route('events');
 		}
 		else
 		{
-			return Redirect::back()->with('errors',$shout->errors->all());
+			return Redirect::back()->with('errors',$event->errors->all());
 		}
 	}
 

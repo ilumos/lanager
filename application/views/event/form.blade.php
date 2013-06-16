@@ -13,6 +13,14 @@ $minutes = array('00','30');
 ?>
 
 <h3>New Event</h3>
+@if(Session::has('errors'))
+	@foreach(Session::get('errors') as $error)
+		<div class="alert alert-error">
+			<a class="close" data-dismiss="alert" href="#">x</a>
+			<strong>Error: </strong>{{$error}}
+		</div>
+	@endforeach
+@endif
 
 {{ Form::open('events/create') }}
 {{ Form::token() }}
@@ -20,11 +28,11 @@ $minutes = array('00','30');
 {{ Form::text('name',NULL,array('placeholder' => 'e.g. Team Fortress 2', 'maxlength' => 200)) }}
 <br>
 {{ Form::label('description', 'Description') }}
-{{ Form::textarea('details',NULL,array('placeholder' => 'Add more info', 'rows' => 4)) }}
+{{ Form::textarea('description',NULL,array('placeholder' => 'Add more info. Markdown allowed.', 'rows' => 4)) }}
 <br>
 {{ Form::label('start', 'Starts') }}
 <div id="start_datetimepicker" class="input-append date">
-    <input id="start" data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
+    <input name="start" id="start" data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
     <span class="add-on">
       <i data-time-icon="icon-time" data-date-icon="icon-calendar">
       </i>
@@ -32,7 +40,7 @@ $minutes = array('00','30');
 </div>
 {{ Form::label('end', 'Ends') }}
 <div id="end_datetimepicker" class="input-append date">
-    <input id="end" data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
+    <input name="end" id="end" data-format="dd/MM/yyyy hh:mm:ss" type="text"></input>
     <span class="add-on">
       <i data-time-icon="icon-time" data-date-icon="icon-calendar">
       </i>
@@ -61,15 +69,6 @@ $minutes = array('00','30');
 <br>
 <br>
 {{ Form::submit('Create') }}
-
-@if(Session::has('errors'))
-	@foreach(Session::get('errors') as $error)
-		<div class="alert alert-error">
-			<a class="close" data-dismiss="alert" href="#">x</a>
-			<strong>Error: </strong>{{$error}}
-		</div>
-	@endforeach
-@endif
 
 {{ Form::close() }}
 @endsection
