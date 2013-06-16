@@ -81,14 +81,18 @@ Route::post('shout/post',
 Route::get('events',
 	array(
 		'as' => 'events',
-		'uses'=>'event@timetable',
+		'uses'=>'event@index',
 	));
 Route::get('events/create',
 	array(
 		'as' => 'events',
-		'uses'=>'event@create',
+		'uses'=>'event@get_create',
 	));
-
+Route::post('events/create',
+	array(
+		'before' => 'csrf|logged_in',
+		'uses'=>'event@post_create',
+	));
 // Games ---------------------------------------------
 Route::get('games',
 	array(

@@ -173,7 +173,7 @@ table#timetable td {
 }
 
 
-table#timetable td.title {
+table#timetable td.event_name {
 	text-align: center;
 	width: 15%;  
 	font-weight: bold;
@@ -181,7 +181,7 @@ table#timetable td.title {
 }
 
 
-table#timetable td.title, table#timetable td.description {
+table#timetable td.event_name, table#timetable td.event_description {
 	background-color:rgba(0,255,0,0.1);
 }
 

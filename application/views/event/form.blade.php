@@ -1,23 +1,26 @@
 @layout('layouts/default')
 @section('content')
 
-<h3>Create Event</h3>
+<?php array_unshift($event_types, NULL); array_unshift($managers, NULL); ?>
 
-{{ Form::open('/event/create') }}
+<h3>New Event</h3>
+
+{{ Form::open('events/create') }}
 {{ Form::token() }}
-{{ Form::label('title', 'Title') }}
-{{ Form::text('title',NULL,array('placeholder' => 'Event title', 'maxlength' => 200)) }}
+{{ Form::label('name', 'Name') }}
+{{ Form::text('name',NULL,array('placeholder' => 'e.g. Team Fortress 2', 'maxlength' => 200)) }}
+<br>
+{{ Form::label('details', 'Details') }}
+{{ Form::textarea('details',NULL,array('placeholder' => 'Add more info', 'rows' => 4)) }}
 <br>
 {{ Form::label('type', 'Type') }}
 {{ Form::select('type', $event_types) }}
 <br>
-{{ Form::label('details', 'Details') }}
-{{ Form::textarea('details',NULL,array('placeholder' => 'Some details', 'rows' => 4)) }}
-<br>
 {{ Form::label('manager', 'Manager') }}
 {{ Form::select('manager', $managers) }}
 <br>
-{{ Form::submit('Create Event') }}
+<br>
+{{ Form::submit('Create') }}
 
 @if(Session::has('errors'))
 	@foreach(Session::get('errors') as $error)

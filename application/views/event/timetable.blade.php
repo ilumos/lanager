@@ -77,8 +77,8 @@ for ($i = 0; $i <= $timetable['total_rows']; $i++)
 			// calculate rows required for the event's length
 			$rows_spanned = (strtotime($events_array[$timetable['current_row_time']]['end'])-$timetable['current_row_time'])/Config::get('lanager.timetable_time_per_row');
 
-			echo '<td class="title" rowspan="'.$rows_spanned.'">'.$events_array[$timetable['current_row_time']]['title'].'</td>';
-			echo '<td class="description" rowspan="'.$rows_spanned.'">'.$events_array[$timetable['current_row_time']]['description'].'</td>';
+			echo '<td class="event_name" rowspan="'.$rows_spanned.'">'.$events_array[$timetable['current_row_time']]['name'].'</td>';
+			echo '<td class="event_description" rowspan="'.$rows_spanned.'">'.$events_array[$timetable['current_row_time']]['description'].'</td>';
 		}
 
 		// if empty tds need to be inserted (no rows spanning over the space)
