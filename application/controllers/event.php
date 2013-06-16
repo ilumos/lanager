@@ -21,7 +21,7 @@ class Event_Controller extends Base_Controller {
 		$managers = LANager\User::order_by('username', 'asc')->lists('username','id');
 
 		return View::make('event.form')
-					->with('title','Create Event')
+					->with('title','New Event')
 					->with('event_types',$event_types)
 					->with('managers',$managers);
 	}
