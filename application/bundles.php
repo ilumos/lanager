@@ -35,7 +35,7 @@
 
 return array(
 
-	'docs' => array('handles' => 'docs'),
+	//'docs' => array('handles' => 'docs'), // laravel docs - will break sparkdown if enabled
 	'lightopenid' => array('auto' => true),
 	'steamprofile' => array('auto' => true),
 	'aware' => array(
