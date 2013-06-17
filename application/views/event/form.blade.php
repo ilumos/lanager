@@ -47,6 +47,7 @@ $managers = array_merge(array(NULL => NULL),$managers );
 
 
 <script type="text/javascript">
+  // initialise start & end datepickers
   $(function() {
     $('#start_datetimepicker').datetimepicker({
       language: 'en'
@@ -54,6 +55,14 @@ $managers = array_merge(array(NULL => NULL),$managers );
     $('#end_datetimepicker').datetimepicker({
       language: 'en'
     });
+  });
+  // populate "end" field when a "start" is chosen
+  $('#start_datetimepicker').datetimepicker().on('hide', function(ev){
+  	if(typeof endPopulatedFromStart == 'undefined')
+  	{
+  		$("#end").val($("#start").val());
+  		endPopulatedFromStart = true;
+  	}
   });
 </script>
 
