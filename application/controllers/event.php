@@ -33,8 +33,8 @@ class Event_Controller extends Base_Controller {
 		$event->description = Input::get('description');
 		$event->start 		= date('Y-m-d H:i:s',strtotime(str_replace('/', '-', Input::get('start'))));
 		$event->end 		= date('Y-m-d H:i:s',strtotime(str_replace('/', '-', Input::get('end'))));
-		$event->type 		= Input::get('type', NULL);
-		$event->manager 	= Input::get('manager', NULL);
+		$event->type 		= (Input::get('type') != '') ? Input::get('type') : NULL;
+		$event->manager 	= (Input::get('manager') != '') ? Input::get('manager') : NULL;
 		if( $event->save() )
 		{
 			return Redirect::to_route('events');

@@ -5,11 +5,9 @@
 // prepare form data
 
 // add empty dropdown items to optional fields
-array_unshift($event_types, NULL);
-array_unshift($managers, NULL);
+$event_types = array_merge(array(NULL => NULL),$event_types );
+$managers = array_merge(array(NULL => NULL),$managers );
 
-$hours = range(0, 24);
-$minutes = array('00','30');
 ?>
 
 <h3>New Event</h3>
