@@ -175,7 +175,7 @@ table#timetable td {
 
 table#timetable td.event_name {
 	text-align: center;
-	width: 15%;  
+	width: 25%;  
 	font-weight: bold;
 	font-size: large;
 }
