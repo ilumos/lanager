@@ -60,7 +60,7 @@ $managers = array_merge(array(NULL => NULL),$managers );
   $('#start_datetimepicker').datetimepicker().on('hide', function(ev){
   	if(typeof endPopulatedFromStart == 'undefined')
   	{
-  		$("#end").val($("#start").val());
+  		$('#end_datetimepicker').datetimepicker('setValue', $("#start").val());
   		endPopulatedFromStart = true;
   	}
   });
