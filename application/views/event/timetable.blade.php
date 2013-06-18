@@ -7,13 +7,14 @@
 
 if(!empty($events))
 {
+
 	// calculate bounds of timetable
 
 	// floor earliest event's start time to hour
 	$timetable['start'] = strtotime(date('Y/m/d H', $timetable['first_event_start']).':00'); 
 
-	// floor latest event's end time to hour
-	$timetable['end'] = strtotime(date('Y/m/d H', $timetable['last_event_end']).':00');
+	// ceiling latest event's end time to hour
+	$timetable['end'] = strtotime(date('Y/m/d H', $timetable['last_event_end']+3600).':00');
 	
 	// get the hour the timetable must start on
 	$timetable['start_hour'] = date('H',$timetable['start']);
@@ -21,8 +22,10 @@ if(!empty($events))
 	// calculate the total number of hours the timetable will be rendering
 	$timetable['total_hours'] = ceil(abs($timetable['start'] - $timetable['end']) / 3600);
 
+	$timetable['time_per_row'] = Config::get('lanager.timetable_time_per_row');
+
 	// calculate number of rows required to render the entire timetable
-	$timetable['total_rows'] = ($timetable['total_hours'] * 3600) / Config::get('lanager.timetable_time_per_row');
+	$timetable['total_rows'] = ($timetable['total_hours'] * 3600) / $timetable['time_per_row'];
 
 
 
@@ -39,9 +42,23 @@ foreach($events as $event)
 {
 	$events_array_temp[$i] = $event->to_array();
 
-	$events_array[strtotime($events_array_temp[$i]['start'])] = $events_array_temp[$i];
+	// round the event's start time to nearest time division
+	$event_start_time_raw = strtotime($events_array_temp[$i]['start']); // mysql date -> unix timestamp
+	$event_start_time_rounded = floor($event_start_time_raw / $timetable['time_per_row']) * $timetable['time_per_row'];
+
+	// put the event in the events array, using the start time as it's key
+	$events_array[$event_start_time_rounded] = $events_array_temp[$i];
+	$events_array[$event_start_time_rounded]['start'] = $event_start_time_rounded;
+
+	// round the event's start time to nearest time division
+	$event_end_time_raw = strtotime($events_array_temp[$i]['end']); // mysql date -> unix timestamp
+	$event_end_time_rounded = floor($event_end_time_raw / $timetable['time_per_row']) * $timetable['time_per_row'];
+
+	// put the event in the events array, using the start time as it's key
+	$events_array[$event_start_time_rounded]['end'] = $event_end_time_rounded;	
 
 	$i++;
+
 
 }
 
@@ -51,7 +68,7 @@ $rows_spanned = 0;
 for ($i = 0; $i <= $timetable['total_rows']; $i++)
 {
 	// calculate the time marking we're at by adding (1 row's time * loop number) to the start time
-	$timetable['current_row_time'] = $timetable['start'] + ($i * Config::get('lanager.timetable_time_per_row'));
+	$timetable['current_row_time'] = $timetable['start'] + ($i * $timetable['time_per_row']);
 
 	// if the current row time is on an hour
 	if(($timetable['current_row_time'] % 3600) == 0)
@@ -75,7 +92,7 @@ for ($i = 0; $i <= $timetable['total_rows']; $i++)
 		if(array_key_exists($timetable['current_row_time'], $events_array))
 		{
 			// calculate rows required for the event's length
-			$rows_spanned = (strtotime($events_array[$timetable['current_row_time']]['end'])-$timetable['current_row_time'])/Config::get('lanager.timetable_time_per_row');
+			$rows_spanned = ($events_array[$timetable['current_row_time']]['end']-$timetable['current_row_time'])/$timetable['time_per_row'];
 
 			// format description with markdown -> html
 			$events_array[$timetable['current_row_time']]['description'] = Sparkdown\Markdown($events_array[$timetable['current_row_time']]['description']);
@@ -85,6 +102,7 @@ for ($i = 0; $i <= $timetable['total_rows']; $i++)
 					.'</td>';
 			echo	'<td class="event_description" rowspan="'.$rows_spanned.'">'.
 						$events_array[$timetable['current_row_time']]['description']
+
 					.'</td>';
 		}
 
