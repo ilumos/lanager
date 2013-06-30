@@ -171,6 +171,11 @@ Route::get('playlist/skip', array(
 		'as' => 'playlist',
 		'uses'=>'playlist@skip',
 	));
+Route::get('playlist/skip/(:all)', array(
+		'before' => 'auth_playlist_screen',
+		'as' => 'playlist',
+		'uses'=>'playlist@skip_entry',
+	));
 Route::get('playlist/delete/(:all)', array(
 		'before' => 'auth_playlist_screen',
 		'as' => 'playlist',

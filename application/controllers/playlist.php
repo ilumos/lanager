@@ -5,8 +5,9 @@ class Playlist_Controller extends Base_Controller {
 	public function action_index()
 	{
 		// Show playlist
-		$playlist_entries = LANager\Playlist_entry::where('playback_state', '=', 1)
-												->or_where('playback_state', '=', 0)
+		$playlist_entries = LANager\Playlist_entry::where('playback_state', '=', 1) // playing
+												->or_where('playback_state', '=', 0) // unplayed
+												->or_where('playback_state', '=', 2) // paused
 												->order_by('created_at', 'asc')->paginate(50);
 		return View::make('playlist.show')
 					->with('title', 'Playlist')
@@ -123,6 +124,13 @@ class Playlist_Controller extends Base_Controller {
 	public function action_delete_entry($entry_id)
 	{
 		DB::table('playlist_entries')->where('id', '=', $entry_id)->delete();
+		return Redirect::back();
+	}
+
+	// Skip the specified item
+	public function action_skip_entry($entry_id)
+	{
+		DB::table('playlist_entries')->where('id', '=', $entry_id)->update(array('playback_state' => 3));
 		return Redirect::back();
 	}
 

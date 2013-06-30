@@ -159,7 +159,7 @@ td.playlist_entry_title {
 	word-wrap: break-word;
 }
 td.playlist_entry_controls {
-	width: 5%;
+	width: 135px;
 	text-align: right;
 }
 
