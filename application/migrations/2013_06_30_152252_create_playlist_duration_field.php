@@ -9,7 +9,7 @@ class Create_Playlist_Duration_Field {
 	 */
 	public function up()
 	{
-		// Add playback state column
+		// Add entry duration column
 		Schema::table('playlist_entries', function($table)
 		{
 			$table->integer('duration');
@@ -23,7 +23,7 @@ class Create_Playlist_Duration_Field {
 	 */
 	public function down()
 	{
-		Schema::table('events', function($table)
+		Schema::table('playlist_entries', function($table)
 		{
 			$table->drop_column('duration');
 		});
