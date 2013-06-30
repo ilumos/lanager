@@ -24,26 +24,13 @@ class Playlist_Controller extends Base_Controller {
 		{
 			return Redirect::back()->with('errors',array(0=>'Invalid video URL'));
 		}
-		// Retrieve video title
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'http://gdata.youtube.com/feeds/api/videos/'.$youtube_url['v']);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-		$response = curl_exec($ch);
-		curl_close($ch);
-
-		libxml_use_internal_errors(true); // supress errors
-		if(simplexml_load_string($response))
-		{
-			$youtube_xml = new SimpleXMLElement($response);
-			$title = (string) $youtube_xml->title;
-		} else {
-			return Redirect::back()->with('errors',array(0=>'Error retrieving requested video'));
-		}
+		// Retrieve video metadata
+		$response = file_get_contents('http://gdata.youtube.com/feeds/api/videos/'.$youtube_url['v'].'?format=5&alt=json');
+		$response = json_decode($response, true); // convert JSON response to array
 
 		$playlist_entry = new LANager\Playlist_entry(array('video_id' => $youtube_url['v']));
-		$playlist_entry->title = (string) $youtube_xml->title;
+		$playlist_entry->title = $response['entry']['title']['$t'];
+		$playlist_entry->duration = $response['entry']['media$group']['yt$duration']['seconds'];
 		$playlist_entry->user_id = Session::get('user_id');
 
 		if( $playlist_entry->save() )
