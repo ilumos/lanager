@@ -98,8 +98,7 @@ class Playlist_Controller extends Base_Controller {
 	{
 		// Show playlist history
 		$playlist_entries = LANager\Playlist_entry::where('playback_state', '=', 4)
-												->or_where('playback_state', '=', 3)
-												->order_by('created_at', 'asc')->paginate(50);
+												->order_by('updated_at', 'desc')->paginate(50);
 		return View::make('playlist.history')
 					->with('title', 'Playlist')
 					->with('playlist_entries', $playlist_entries);

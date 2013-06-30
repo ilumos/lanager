@@ -54,6 +54,10 @@ function pollPlaylist()
 				}
 			}
 		}
+		else
+		{
+			console.log('Playlist: Error polling - no response');
+		}
 	});
 	setTimeout(pollPlaylist,2000);
 }
