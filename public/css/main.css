@@ -143,9 +143,25 @@ input#playlist_entry_url {
 	width: 500px;
 }
 
-
-
-
+table#playlist {
+	width: 100%;
+}
+table#playlist tr.entry_now_playing {
+	font-weight: bold;
+}
+td.playlist_entry_user {
+	width: 5%;
+}
+td.playlist_entry_duration {
+	width: 5%;
+}
+td.playlist_entry_title {
+	word-wrap: break-word;
+}
+td.playlist_entry_controls {
+	width: 5%;
+	text-align: right;
+}
 
 
 /* event timetable */
