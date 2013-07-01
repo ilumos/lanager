@@ -49,6 +49,7 @@ return array(
 		)
 	),
 	'sparkdown' => array('handles' => 'sparkdown'),
+    'authority' => array('auto' => true),
 
 );
 

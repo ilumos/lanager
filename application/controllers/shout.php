@@ -4,6 +4,8 @@ class Shout_Controller extends Base_Controller {
 
 	public function action_index()
 	{
+		Bundle::start('authority');
+
 		// Show shouts
 		$shouts = LANager\Shout::order_by('id', 'desc')->paginate(10);
 		return View::make('shout.show')
