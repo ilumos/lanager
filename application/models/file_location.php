@@ -2,6 +2,6 @@
 namespace LANager;
 use Aware;
 
-class File_Location extends Aware {
+class File_location extends Aware {
 
 }
