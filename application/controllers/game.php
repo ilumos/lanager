@@ -16,10 +16,10 @@ class Game_Controller extends Base_Controller {
 		// Collect all user IDs
 		foreach ($users as $user)
 		{
-			$user_ids[] = $user->id;
+			$user_steam_ids[] = $user->steam_id_64;
 		}
 
-		$steamProfile = new SteamProfile($user_ids);
+		$steamProfile = new SteamProfile($user_steam_ids);
 
 		$users = $steamProfile->fetchProfiles();
 

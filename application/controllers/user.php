@@ -23,11 +23,12 @@ class User_Controller extends Base_Controller {
 			$SteamProfile->fetchProfile();
 
 			// Create or update user details in database
-			$user = LANager\User::find($steamId64);
+			$user = LANager\User::where('steam_id_64', '=', $steamId64)->first();
+	
 			if($user == NULL) {
 				$user = new LANager\User;
 			}
-			$user->id = $steamId64;
+			$user->steam_id_64 = $steamId64;
 			$user->username = $SteamProfile->getProfileName();
 			$user->avatar_small = $SteamProfile->getAvatarSmall();
 			$user->avatar_medium = $SteamProfile->getAvatarMedium();
@@ -35,7 +36,7 @@ class User_Controller extends Base_Controller {
 			$user->save();
 
 			// Start a session
-			Session::put('user_id', $steamId64);
+			Session::put('user_id', $user->id);
 			Session::put('username', $SteamProfile->getProfileName());
 			Session::put('avatar_small', $SteamProfile->getAvatarSmall());
 			Session::put('avatar_medium', $SteamProfile->getAvatarMedium());
@@ -53,7 +54,7 @@ class User_Controller extends Base_Controller {
 	public function action_profile($user_id)
 	{
 		$user = LANager\User::find($user_id);
-		$steamProfile = new SteamProfile($user_id);
+		$steamProfile = new SteamProfile($user->steam_id_64);
 		$steamProfile->fetchProfile();
 		return View::make('user.profile')
 					->with('title',$user->username)
