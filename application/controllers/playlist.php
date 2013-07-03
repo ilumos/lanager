@@ -32,7 +32,7 @@ class Playlist_Controller extends Base_Controller {
 		$playlist_entry = new LANager\Playlist_entry(array('video_id' => $youtube_url['v']));
 		$playlist_entry->title = $response['entry']['title']['$t'];
 		$playlist_entry->duration = $response['entry']['media$group']['yt$duration']['seconds'];
-		$playlist_entry->user_id = Session::get('user_id');
+		$playlist_entry->user_id = Auth::user()->id;
 
 		if( $playlist_entry->save() )
 		{
