@@ -35,6 +35,8 @@ class User_Controller extends Base_Controller {
 			$user->avatar_large = $SteamProfile->getAvatarLarge();
 			$user->save();
 
+			Auth::login($user->id);
+
 			// Start a session
 			Session::put('user_id', $user->id);
 			Session::put('username', $SteamProfile->getProfileName());

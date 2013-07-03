@@ -1,4 +1,4 @@
-c<?php
+<?php
 namespace LANager;
 use Aware;
 
