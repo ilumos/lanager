@@ -22,12 +22,14 @@ class User_Controller extends Base_Controller {
 			$SteamProfile = new SteamProfile($steamId64);
 			$SteamProfile->fetchProfile();
 
-			// Create or update user details in database
+			// See if the user has logged in previously
 			$user = LANager\User::where('steam_id_64', '=', $steamId64)->first();
 	
+			// If they have not, create them in the database
 			if($user == NULL) {
 				$user = new LANager\User;
 			}
+			// Add or update their details
 			$user->steam_id_64 = $steamId64;
 			$user->username = $SteamProfile->getProfileName();
 			$user->avatar_small = $SteamProfile->getAvatarSmall();
@@ -35,21 +37,16 @@ class User_Controller extends Base_Controller {
 			$user->avatar_large = $SteamProfile->getAvatarLarge();
 			$user->save();
 
+			// Log the user in
 			Auth::login($user->id);
 
-			// Start a session
-			Session::put('user_id', $user->id);
-			Session::put('username', $SteamProfile->getProfileName());
-			Session::put('avatar_small', $SteamProfile->getAvatarSmall());
-			Session::put('avatar_medium', $SteamProfile->getAvatarMedium());
-			Session::put('avatar_large', $SteamProfile->getAvatarLarge());
 		}
 		return Redirect::home();
 	}
 	
 	public function action_logout()
 	{
-		Session::flush();
+		Auth::logout();
 		return Redirect::back();
 	}
 

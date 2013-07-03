@@ -30,11 +30,7 @@ class Base_Controller extends Controller {
 		Asset::add('style', 'css/main.css');
 		parent::__construct();
 
-		if(Session::has('username')) {
-			// Show logged in user's name and avatar
-			View::share('logged_in_user', Session::get('username'));
-			View::share('logged_in_user_avatar_small', Session::get('avatar_small'));
-		} else {
+		if(!Auth::check()) {
 			// Show sign-in button
 			Bundle::start('LightOpenId');
 			$LightOpenId = new LightOpenId;

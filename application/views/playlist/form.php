@@ -1,7 +1,6 @@
 <?php
 
-// Show add video form to logged in users
-if( Session::has('username') )
+if( Authority::can('submit', 'playlist_entry') )
 {
 	echo Form::open('/playlist/add_entry');
 	echo Form::token();

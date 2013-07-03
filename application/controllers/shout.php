@@ -4,8 +4,6 @@ class Shout_Controller extends Base_Controller {
 
 	public function action_index()
 	{
-		Bundle::start('authority');
-
 		// Show shouts
 		$shouts = LANager\Shout::order_by('id', 'desc')->paginate(10);
 		return View::make('shout.show')
@@ -17,7 +15,7 @@ class Shout_Controller extends Base_Controller {
 	{
 		$shout = new LANager\Shout(array('content' => Input::get('content')));
 		$shout->content = Input::get('content');
-		$shout->user_id = Session::get('user_id');
+		$shout->user_id = Auth::user()->id;
 		if( $shout->save() )
 		{
 			return Redirect::to_route('shouts');

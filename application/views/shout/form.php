@@ -1,7 +1,7 @@
 <?php
 
 // Show post shout form to logged in users
-if( Session::has('username') )
+if( Authority::can('submit','shout') )
 {
 	echo Form::open('/shout/post');
 	echo Form::token();

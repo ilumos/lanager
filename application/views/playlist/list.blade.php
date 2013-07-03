@@ -12,15 +12,17 @@
 				{{ e($entry->title) }}
 			</td>
 			<td class="playlist_entry_controls">
-				@if(Config::get('lanager.playlist_screen_allowed_user') == Session::get('user_id'))
+				@if(Authority::can('control', 'playlist_playback'))
 					@if($entry->playback_state == 1)
 						<a href="{{URL::to_action('playlist@pause')}}" class="btn btn-success" title="Pause playback"><i class="icon-pause"></i></a>
 					@elseif($entry->playback_state == 2)
 						<a href="{{URL::to_action('playlist@play')}}" class="btn btn-success" title="Resume playback"><i class="icon-play"></i></a>
 					@endif
-					<a href="{{URL::to_action('playlist@skip_entry',$entry->id)}}" class="btn btn-warning" title="Skip this entry"><i class="icon-step-forward"></i></a>
+				@endif
+				@if(Authority::can('delete', 'playlist_entry'))
 					<a href="{{URL::to_action('playlist@delete_entry',$entry->id)}}" class="btn btn-danger" title="Delete this entry"><i class="icon-trash"></i></a>
-				@else
+				@endif
+				@if(Authority::can('vote_skip', 'playlist_entry'))
 					<a href="#voteskip" class="btn btn-warning" title="Vote to skip this entry"><i class="icon-step-forward"></i></a>
 				@endif
 			</td>

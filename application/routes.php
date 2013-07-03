@@ -73,7 +73,7 @@ Route::get('shouts',
 	));
 Route::post('shout/post',
 	array(
-		'before' => 'csrf|logged_in',
+		'before' => 'csrf|authority:submit,shout',
 		'uses'=>'shout@post',
 	));
 
@@ -85,12 +85,12 @@ Route::get('events',
 	));
 Route::get('events/create',
 	array(
-		'as' => 'events',
+		'before' => 'authority:create,event',
 		'uses'=>'event@get_create',
 	));
 Route::post('events/create',
 	array(
-		'before' => 'csrf',
+		'before' => 'csrf|authority:create,event',
 		'uses'=>'event@post_create',
 	));
 // Games ---------------------------------------------
@@ -127,7 +127,7 @@ Route::get('playlist',
 		'uses'=>'playlist@index',
 	));
 Route::post('playlist/add_entry', array(
-		'before' => 'csrf|logged_in',
+		'before' => 'csrf|authority:submit,playlist_entry',
 		'as' => 'playlist',
 		'uses'=>'playlist@add_entry',
 	));
@@ -138,46 +138,46 @@ Route::get('playlist/history', array(
 
 Route::get('playlist/screen',
 	array(
-		'before' => 'auth_playlist_screen',
+		'before' => 'authority:display,playlist_screen',
 		'as' => 'playlist', 
 		'uses'=>'playlist@screen',
 	));
 Route::get('playlist/get_entry', array(
-		'before' => 'auth_playlist_screen',
+		'before' => 'authority:display,playlist_screen',
 		'as' => 'playlist',
 		'uses'=>'playlist@get_entry',
 	));
 
 Route::get('playlist/mark_entry/(:all)/(:num)', array(
-		'before' => 'auth_playlist_screen',
+		'before' => 'authority:display,playlist_screen',
 		'as' => 'playlist',
 		'uses'=>'playlist@mark_entry',
 	));
 
 Route::get('playlist/pause', array(
-		'before' => 'auth_playlist_screen',
+		'before' => 'authority:display,playlist_screen',
 		'as' => 'playlist',
 		'uses'=>'playlist@pause',
 	));
 
 Route::get('playlist/play', array(
-		'before' => 'auth_playlist_screen',
+		'before' => 'authority:display,playlist_screen',
 		'as' => 'playlist',
 		'uses'=>'playlist@play',
 	));
 
 Route::get('playlist/skip', array(
-		'before' => 'auth_playlist_screen',
+		'before' => 'authority:display,playlist_screen',
 		'as' => 'playlist',
 		'uses'=>'playlist@skip',
 	));
 Route::get('playlist/skip/(:all)', array(
-		'before' => 'auth_playlist_screen',
+		'before' => 'authority:display,playlist_screen',
 		'as' => 'playlist',
 		'uses'=>'playlist@skip_entry',
 	));
 Route::get('playlist/delete/(:all)', array(
-		'before' => 'auth_playlist_screen',
+		'before' => 'authority:display,playlist_screen',
 		'as' => 'playlist',
 		'uses'=>'playlist@delete_entry',
 	));
@@ -253,17 +253,13 @@ Route::filter('csrf', function()
 	if (Request::forged()) return Response::error('500');
 });
 
-Route::filter('logged_in', function()
+Route::filter('authority', function($action, $resource)
 {
-	if( !Session::has('username') ) return Response::error('403');
+	if(Authority::cannot($action, $resource))
+	{
+		return Response::error('403');
+	}
 });
-
-// Only allow the defined user to view the playlist screen
-Route::filter('auth_playlist_screen',function()
-{
-	if(Config::get('lanager.playlist_screen_allowed_user') != Session::get('user_id')) return Redirect::to('playlist');
-});
-
 
 
 

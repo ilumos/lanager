@@ -20,13 +20,22 @@ return array(
 		{
 			Authority::allow('skip', 'playlist_entry');
 			Authority::allow('delete', 'playlist_entry');
-			Authority::allow('submit', 'shout');
+			Authority::allow('control', 'playlist_playback');
+
+			Authority::allow('create', 'event');
+
 		}
 
+		if($user->has_role('playlist_screener'))
+		{
+			Authority::allow('display', 'playlist_screen');
+		}
+		
 		if($user->has_role('attendee'))
 		{
 			Authority::allow('submit', 'playlist_entry');
 			Authority::allow('submit', 'shout');
+			Authority::allow('vote_skip', 'playlist_entry');
 		}
 	}
 

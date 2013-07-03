@@ -65,7 +65,7 @@
 
 						</ul>
 						<ul class="nav pull-right">
-						@if (isset($logged_in_user))
+						@if (Auth::check())
 							@include('partials.logged_in')
 						@else
 							@include('partials.login')
