@@ -11,8 +11,6 @@ class Info_Controller extends Base_Controller {
 					->with('children',$children);
 	}
 
-
-
 	public function action_display($info_id)
 	{
 		Bundle::start('sparkdown');
