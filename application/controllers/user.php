@@ -33,9 +33,7 @@ class User_Controller extends Base_Controller {
 			$user->steam_id_64 = $steamId64;
 			$user->username = $SteamProfile->getProfileName();
 			$user->ip = getenv("REMOTE_ADDR");
-			$user->avatar_small = $SteamProfile->getAvatarSmall();
-			$user->avatar_medium = $SteamProfile->getAvatarMedium();
-			$user->avatar_large = $SteamProfile->getAvatarLarge();
+			$user->avatar = $SteamProfile->getAvatarSmall();
 			$user->save();
 
 			// Log the user in
