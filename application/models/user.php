@@ -63,7 +63,7 @@ class User extends Aware {
 
 	public function get_avatar_large()
 	{
-		return str_replace('.jpg', '_large.jpg', $this->get_attribute('avatar'));
+		return str_replace('.jpg', '_full.jpg', $this->get_attribute('avatar'));
 	}
 
 }
