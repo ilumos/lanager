@@ -48,7 +48,7 @@ return array(
 			'map' => array('DateFmt' => '(:bundle)/datefmt.php')
 		)
 	),
-	'sparkdown' => array('handles' => 'sparkdown'),
+	'sparkdown' => array('auto' => true, 'handles' => 'sparkdown'),
     'authority' => array('auto' => true),
 
 );
