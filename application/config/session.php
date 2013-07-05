@@ -57,7 +57,7 @@ return array(
 	|
 	*/
 
-	'lifetime' => 5760, // 4 days - length of an average event
+	'lifetime' => 5760, // 4 days - length of an average LAN event
 
 	/*
 	|--------------------------------------------------------------------------
@@ -79,7 +79,7 @@ return array(
 	|
 	*/
 
-	'cookie' => 'laravel_session',
+	'cookie' => 'lanager',
 
 	/*
 	|--------------------------------------------------------------------------
