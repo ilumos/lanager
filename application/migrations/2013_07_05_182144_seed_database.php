@@ -41,9 +41,13 @@ class Seed_Database {
 	public function down()
 	{
 		DB::table('roles')->where_in('name', array('admin', 'attendee', 'playlist_screener'))->delete();
-		DB::table('info')->where('title','=','The LANager')->delete();
-
 		DB::table('users')->where('steam_id_64','=','76561197970613738')->delete();
+		DB::table('shouts')->where('content','=','Welcome to the LANager!')->delete();
+		DB::table('playlist_entries')->where('video_id','=','OpCJzdWxEbQ')->delete();
+
+
+		DB::query('TRUNCATE TABLE info');
+		DB::query('TRUNCATE TABLE file_locations');
 	}
 
 }
