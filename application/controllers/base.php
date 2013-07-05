@@ -32,7 +32,6 @@ class Base_Controller extends Controller {
 
 		if(!Auth::check()) {
 			// Show sign-in button
-			Bundle::start('LightOpenId');
 			$LightOpenId = new LightOpenId;
 			$LightOpenId->identity = 'http://steamcommunity.com/openid';
 			$LightOpenId->returnUrl = URL::to_route('login');
