@@ -4,9 +4,11 @@
 	<img class="profile_avatar" src="{{$user->avatar_large}}">
 	<span class="profile_username">{{e($user->username)}}</span>
 	<ul class="profile_tools">
-		@if($user->id == Auth::user()->id)
-			<li><a href="{{$steamProfile->getCommunityProfileLink()}}/edit" target="_blank">Edit Profile</a></li>
-			<li><a href="{{URL::to_action('user@delete',array($user->id))}}">Delete Account</a></li>
+		@if(Auth::check())
+			@if($user->id == Auth::user()->id)
+				<li><a href="{{$steamProfile->getCommunityProfileLink()}}/edit" target="_blank">Edit Profile</a></li>
+				<li><a href="{{URL::to_action('user@delete',array($user->id))}}">Delete Account</a></li>
+			@endif
 		@else
 			<li><a href="{{$steamProfile->getAddFriendLink()}}">Add</a></li>
 			<li><a href="{{$steamProfile->getSendMessageLink()}}">Message</a></li>
