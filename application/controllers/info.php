@@ -13,7 +13,6 @@ class Info_Controller extends Base_Controller {
 
 	public function action_display($info_id)
 	{
-		Bundle::start('sparkdown');
 		$info = LANager\Info::find($info_id);
 		$children = LANager\Info::where('parent_id', '=', $info_id)->get();
 		return View::make('info.display')
