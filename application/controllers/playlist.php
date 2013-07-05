@@ -2,9 +2,9 @@
 
 class Playlist_Controller extends Base_Controller {
 
-	public function action_index()
+	public function action_index() // display playlist & add entry form
 	{
-		// Show playlist
+		// Get all enqueued playlist items
 		$playlist_entries = LANager\Playlist_entry::where('playback_state', '=', 1) // playing
 												->or_where('playback_state', '=', 0) // unplayed
 												->or_where('playback_state', '=', 2) // paused
@@ -14,9 +14,9 @@ class Playlist_Controller extends Base_Controller {
 					->with('playlist_entries', $playlist_entries);
 	}
 
-	public function action_add_entry()
+
+	public function action_add_entry() // accept post data
 	{
-		
 		// Extract video ID from URL
 		$raw_url = Input::get('url');
 		parse_str( parse_url( $raw_url, PHP_URL_QUERY ), $youtube_url );
@@ -25,10 +25,12 @@ class Playlist_Controller extends Base_Controller {
 		{
 			return Redirect::back()->with('errors',array(0=>'Invalid video URL'));
 		}
+		
 		// Retrieve video metadata
 		$response = file_get_contents('http://gdata.youtube.com/feeds/api/videos/'.$youtube_url['v'].'?format=5&alt=json');
 		$response = json_decode($response, true); // convert JSON response to array
 
+		// Insert video id and metadata into database
 		$playlist_entry = new LANager\Playlist_entry(array('video_id' => $youtube_url['v']));
 		$playlist_entry->title = $response['entry']['title']['$t'];
 		$playlist_entry->duration = $response['entry']['media$group']['yt$duration']['seconds'];
@@ -45,46 +47,8 @@ class Playlist_Controller extends Base_Controller {
 	}
 
 
-	public function action_screen()
-	{ 
-			// Show screen - all videos loaded via javascript
-			return View::make('playlist.screen')
-						->with('title', 'Playlist Screen');
-	}
-
-	// Get current playlist entry and its playback state
-	public function action_get_entry()
+	public function action_history() // Show playlist history
 	{
-		// get either
-		//  - currently playing video
-		//  - currently paused video
-		//  - next unplayed video
-		$playlist_entry = LANager\Playlist_entry::with('user')
-												->where('playback_state', '=', 2) // paused
-												->or_where('playback_state', '=', 1) // playing
-												->or_where('playback_state', '=', 0) // unplayed
-												->order_by('playback_state', 'desc') // order: paused, playing, unplayed
-												->order_by('created_at', 'asc') // secondary order: oldest to newest
-												->first();
-		if(!empty($playlist_entry))
-		{
-			// return entry as JSON
-			return Response::eloquent($playlist_entry);
-		}
-	}
-
-	// Mark entry as playing/played/paused
-	public function action_mark_entry($entry_id,$playback_state)
-	{
-		return DB::table('playlist_entries')
-					->where('id', '=', $entry_id)
-					->update(array('playback_state' => $playback_state));
-	}
-
-
-	public function action_history()
-	{
-		// Show playlist history
 		$playlist_entries = LANager\Playlist_entry::where('playback_state', '=', 4)
 												->order_by('updated_at', 'desc')->paginate(50);
 		return View::make('playlist.history')
@@ -92,8 +56,37 @@ class Playlist_Controller extends Base_Controller {
 					->with('playlist_entries', $playlist_entries);
 	}
 
-	// Pause the currently playing item
-	public function action_pause()
+
+	public function action_screen() // Show playout screen (all videos loaded via js)
+	{ 
+			return View::make('playlist.screen')
+						->with('title', 'Playlist Screen');
+	}
+
+
+	public function action_get_entry() 	// Get current playlist entry and its playback state
+	{
+		$playlist_entry = LANager\Playlist_entry::with('user')
+												->where('playback_state', '=', 2) // paused entries
+												->or_where('playback_state', '=', 1) // playing entries
+												->or_where('playback_state', '=', 0) // unplayed entries
+												->order_by('playback_state', 'desc') // order: paused, playing, unplayed
+												->order_by('created_at', 'asc') // secondary order: oldest to newest
+												->first();
+		if(!empty($playlist_entry))	return Response::eloquent($playlist_entry); // return playlist entry  as JSON
+
+	}
+
+
+	public function action_mark_entry($entry_id,$playback_state) // Mark specified entry as playing/paused/played
+	{
+		return DB::table('playlist_entries')
+					->where('id', '=', $entry_id)
+					->update(array('playback_state' => $playback_state));
+	}
+
+
+	public function action_pause() // Pause the currently playing item
 	{
 		DB::table('playlist_entries')
 			->where('playback_state', '=', 1) // playing
@@ -101,8 +94,8 @@ class Playlist_Controller extends Base_Controller {
 		return Redirect::back();
 	}
 
-	// Play the currently paused item
-	public function action_play()
+	
+	public function action_play() // Play the currently paused playlist entry
 	{
 		DB::table('playlist_entries')
 			->where('playback_state', '=', 2) // paused
@@ -110,8 +103,8 @@ class Playlist_Controller extends Base_Controller {
 		return Redirect::back();
 	}
 
-	// Skip the currently playing item
-	public function action_skip()
+
+	public function action_skip() // Skip the currently playing playlist entry
 	{
 		DB::table('playlist_entries')
 			->where('playback_state', '=', 1) // playing
@@ -120,15 +113,15 @@ class Playlist_Controller extends Base_Controller {
 		return Redirect::back();
 	}
 
-	// Delete the specified item
-	public function action_delete_entry($entry_id)
+
+	public function action_delete_entry($entry_id) // Delete the specified playlist entry
 	{
 		DB::table('playlist_entries')->where('id', '=', $entry_id)->delete();
 		return Redirect::back();
 	}
 
-	// Skip the specified item
-	public function action_skip_entry($entry_id)
+
+	public function action_skip_entry($entry_id) // Skip the specified playlist entry
 	{
 		DB::table('playlist_entries')->where('id', '=', $entry_id)->update(array('playback_state' => 3));
 		return Redirect::back();
