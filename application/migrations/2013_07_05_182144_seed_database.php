@@ -30,6 +30,11 @@ class Seed_Database {
 		LANager\File_location::create(array('location' => '\\\\files\\'));
 		LANager\File_location::create(array('location' => 'http://files/'));
 
+		LANager\Event_type::create(array('name' => 'Tournament'));
+		LANager\Event_type::create(array('name' => 'Big Game'));
+		LANager\Event_type::create(array('name' => 'Food'));
+		LANager\Event_type::create(array('name' => 'Ceremony'));
+		LANager\Event_type::create(array('name' => 'Outing'));
 
 	}
 
@@ -44,6 +49,7 @@ class Seed_Database {
 		DB::table('users')->where('steam_id_64','=','76561197970613738')->delete();
 		DB::table('shouts')->where('content','=','Welcome to the LANager!')->delete();
 		DB::table('playlist_entries')->where('video_id','=','OpCJzdWxEbQ')->delete();
+		DB::table('roles')->where_in('name', array('Tournament', 'Big Game', 'Food', 'Ceremony', 'Outing'))->delete();
 
 
 		DB::query('TRUNCATE TABLE info');
