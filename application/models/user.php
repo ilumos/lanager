@@ -51,5 +51,19 @@ class User extends Aware {
 		return false;
 	}
 
+	public function get_avatar_small()
+	{
+		return $this->get_attribute('avatar');
+	}
+
+	public function get_avatar_medium()
+	{
+		return str_replace('.jpg', '_medium.jpg', $this->get_attribute('avatar'));
+	}
+
+	public function get_avatar_large()
+	{
+		return str_replace('.jpg', '_large.jpg', $this->get_attribute('avatar'));
+	}
 
 }
