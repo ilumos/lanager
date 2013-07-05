@@ -25,16 +25,33 @@ class User_Controller extends Base_Controller {
 			// See if the user has logged in previously
 			$user = LANager\User::where('steam_id_64', '=', $steamId64)->first();
 	
-			// If they have not, create them in the database
+			// If they have not, create them in the database as an attendee
 			if($user == NULL) {
 				$user = new LANager\User;
+				$roles[] = LANager\Role::where('name','=','attendee')->first();
+
+				// If they are the first user to sign in (or the first user after the initial seed)
+				if(LANager\User::count() <= 1)
+				{
+					// Give them admin privileges
+				$roles[] = LANager\Role::where('name','=','admin')->first();
+				}
 			}
+
 			// Add or update their details
 			$user->steam_id_64 = $steamId64;
 			$user->username = $SteamProfile->getProfileName();
 			$user->ip = getenv("REMOTE_ADDR");
 			$user->avatar = $SteamProfile->getAvatarSmall();
 			$user->save();
+
+			if(isset($roles))
+			{
+				foreach($roles as $role)
+				{
+					$user->roles()->attach($role);
+				}
+			}
 
 			// Log the user in
 			Auth::login($user->id);
