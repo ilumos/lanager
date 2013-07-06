@@ -177,7 +177,7 @@ Route::get('playlist/skip/(:all)', array(
 		'uses'=>'playlist@skip_entry',
 	));
 Route::get('playlist/delete/(:all)', array(
-		'before' => 'authority:display,playlist_screen',
+		'before' => 'authority:delete,playlist_entry,'.URI::segment(3), // check if they can delete specific entry
 		'as' => 'playlist',
 		'uses'=>'playlist@delete_entry',
 	));
@@ -253,9 +253,9 @@ Route::filter('csrf', function()
 	if (Request::forged()) return Response::error('500');
 });
 
-Route::filter('authority', function($action, $resource)
+Route::filter('authority', function($action, $resource, $item = NULL)
 {
-	if(Authority::cannot($action, $resource))
+	if(Authority::cannot($action, $resource, $item))
 	{
 		return Response::error('403');
 	}

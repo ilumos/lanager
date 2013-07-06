@@ -36,6 +36,16 @@ return array(
 			Authority::allow('submit', 'playlist_entry');
 			Authority::allow('submit', 'shout');
 			Authority::allow('vote_skip', 'playlist_entry');
+
+			// attendees can delete their own submitted playlist entries
+			Authority::allow('delete', 'playlist_entry', function($playlist_entry) use ($user)
+			{
+				// passed id instead of object
+				if(is_numeric($playlist_entry)) $playlist_entry = LANager\Playlist_entry::where('id', '=', $playlist_entry)->first();
+
+				return ($playlist_entry->user_id == $user->id);
+			});
+
 		}
 	}
 
