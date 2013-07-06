@@ -59,8 +59,13 @@ class Playlist_Controller extends Base_Controller {
 
 	public function action_screen() // Show playout screen (all videos loaded via js)
 	{ 
-			return View::make('playlist.screen')
-						->with('title', 'Playlist Screen');
+		// calculate youtube player width from supplied resolution
+		$player['width'] = floor((Config::get('lanager.playlist_screen_width')-Config::get('lanager.player_padding_horizontal')*2));
+		$player['height'] = floor((Config::get('lanager.playlist_screen_height')-Config::get('lanager.player_padding_vertical')*2));
+
+		return View::make('playlist.screen')
+					->with('title', 'Playlist Screen')
+					->with('player_dimensions', $player);
 	}
 
 

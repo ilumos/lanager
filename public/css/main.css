@@ -164,6 +164,13 @@ td.playlist_entry_controls {
 }
 
 
+/* playlist playout screen */
+div#now_playing {
+	font-size: 160%;
+	margin-bottom: 15px;
+}
+
+
 /* event timetable */
 table#timetable {
 	width: 100%;
