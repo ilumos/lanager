@@ -1,1 +1,0 @@
-<a href="{{ $login_button }}"><img class="pull-right steam-signin" src="{{URL::base();}}/img/sits_small.png"></a>
