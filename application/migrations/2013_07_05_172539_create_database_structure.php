@@ -12,7 +12,7 @@ class Create_Database_Structure {
 		Schema::create('users', function($table)
 		{
 			$table->increments('id');
-			$table->string('steam_id_64', 17);
+			$table->string('steam_id_64', 17)->unique();
 			$table->string('username',32);
 			$table->string('ip',15);
 			$table->string('avatar',255);
