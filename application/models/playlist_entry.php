@@ -18,4 +18,9 @@ class Playlist_entry extends Aware {
 		return $this->belongs_to('LANager\User');
 	}
 
+	public function user_skip_votes()
+	{
+		return $this->has_many('LANager\Playlist_entry_user_skip_vote');
+	}
+
 }

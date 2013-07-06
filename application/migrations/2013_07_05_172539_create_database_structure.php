@@ -57,12 +57,12 @@ class Create_Database_Structure {
 			$table->foreign('user_id')->references('id')->on('users')->on_update('cascade')->on_delete('cascade');
 		});
 
-		Schema::create('playlist_entry_skip_votes', function($table)
+		Schema::create('playlist_entry_user_skip_votes', function($table)
 		{
 			$table->increments('id');
 			$table->integer('playlist_entry_id')->unsigned();
 			$table->integer('user_id')->unsigned();
-			$table->string('comments',255)->nullable();
+			$table->timestamps();
 			$table->foreign('playlist_entry_id')->references('id')->on('playlist_entries')->on_update('cascade')->on_delete('cascade');
 			$table->foreign('user_id')->references('id')->on('users')->on_update('cascade')->on_delete('cascade');
 		});
@@ -128,6 +128,7 @@ class Create_Database_Structure {
 		Schema::drop('event_types');
 		Schema::drop('file_locations');
 		Schema::drop('info');
+		Schema::drop('playlist_entry_user_skip_votes');
 		Schema::drop('playlist_entries');
 		Schema::drop('shouts');
 		Schema::drop('role_user');

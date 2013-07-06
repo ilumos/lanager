@@ -171,10 +171,10 @@ Route::get('playlist/skip', array(
 		'as' => 'playlist',
 		'uses'=>'playlist@skip',
 	));
-Route::get('playlist/skip/(:all)', array(
-		'before' => 'authority:display,playlist_screen',
+Route::get('playlist/vote_skip/(:all)', array(
+		'before' => 'authority:vote_skip,playlist_entry,'.URI::segment(3), // check if they can skip specific entry
 		'as' => 'playlist',
-		'uses'=>'playlist@skip_entry',
+		'uses'=>'playlist@vote_skip_entry',
 	));
 Route::get('playlist/delete/(:all)', array(
 		'before' => 'authority:delete,playlist_entry,'.URI::segment(3), // check if they can delete specific entry

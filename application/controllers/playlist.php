@@ -121,10 +121,34 @@ class Playlist_Controller extends Base_Controller {
 	}
 
 
-	public function action_skip_entry($entry_id) // Skip the specified playlist entry
+	public function action_vote_skip_entry($entry_id) // Skip the specified playlist entry
 	{
-		DB::table('playlist_entries')->where('id', '=', $entry_id)->update(array('playback_state' => 3));
-		return Redirect::back();
+		if($playlist_entry = LANager\Playlist_entry::find($entry_id))
+		{
+			// insert new user skip vote for this playlist entry
+			$user_skip_vote = new LANager\Playlist_entry_user_skip_vote(array('user_id' => Auth::user()->id));
+			$user_skip_vote = $playlist_entry->user_skip_votes()->insert($user_skip_vote);
+
+			// check if total votes for this video exceeds required percentage of users
+			$total_entry_skip_votes = LANager\Playlist_entry_user_skip_vote::where('playlist_entry_id', '=', $playlist_entry->id)->count();
+			$total_users = LANager\User::count();
+			$threshold_percent = Config::get('lanager.playlist_entry_vote_skip_threshold_percent');
+			$skip_vote_percent = (100/$total_users)*$total_entry_skip_votes;
+			
+			if($skip_vote_percent >= $threshold_percent)
+			{
+				DB::table('playlist_entries')->where('id', '=', $entry_id)->update(array('playback_state' => 3));
+			}
+
+			return Redirect::back()->with('success',array('Your vote to skip this entry has been recorded.'));
+		}
+		else
+		{
+			return Response::error('404');
+		}
+
+
 	}
+
 
 }

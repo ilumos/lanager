@@ -67,6 +67,7 @@ Autoloader::map(array(
 	
 	// Hard map models using underscores to avoid old style PSR0 namespacing
 	'LANager\\Playlist_entry' => path('app') . 'models/playlist_entry.php',
+	'LANager\\Playlist_entry_user_skip_vote' => path('app') . 'models/playlist_entry_user_skip_vote.php',
 	'LANager\\Event_type' => path('app') . 'models/event_type.php',
 	'LANager\\File_location' => path('app') . 'models/file_location.php',
 ));

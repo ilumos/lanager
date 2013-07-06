@@ -22,8 +22,8 @@
 				@if(Authority::can('delete', 'playlist_entry', $entry))
 					<a href="{{URL::to_action('playlist@delete_entry',$entry->id)}}" class="btn btn-danger" title="Delete this entry"><i class="icon-trash"></i></a>
 				@endif
-				@if(Authority::can('vote_skip', 'playlist_entry') && $entry->playback_state == 1)
-					<a href="#voteskip" class="btn btn-warning" title="Vote to skip this entry"><i class="icon-step-forward"></i></a>
+				@if(Authority::can('vote_skip', 'playlist_entry', $entry) && $entry->playback_state == 1)
+					<a href="{{URL::to_action('playlist@vote_skip_entry',$entry->id)}}" class="btn btn-warning" title="Vote to skip this entry"><i class="icon-step-forward"></i></a>
 				@endif
 			</td>
 		</tr>	

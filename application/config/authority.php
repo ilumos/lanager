@@ -35,7 +35,18 @@ return array(
 		{
 			Authority::allow('submit', 'playlist_entry');
 			Authority::allow('submit', 'shout');
-			Authority::allow('vote_skip', 'playlist_entry');
+			
+			// attendees can vote to skip a video if they haven't already voted on the video before
+			Authority::allow('vote_skip', 'playlist_entry', function($playlist_entry) use ($user)
+			{
+				// passed id instead of object
+				if(is_numeric($playlist_entry)) $playlist_entry = LANager\Playlist_entry::where('id', '=', $playlist_entry)->first();
+
+				$this_user_skip_votes = LANager\Playlist_entry_user_skip_vote::where('playlist_entry_id', '=', $playlist_entry->id)
+																	->where('user_id', '=', $user->id)
+																	->count();
+				return ($this_user_skip_votes == 0);
+			});
 
 			// attendees can delete their own submitted playlist entries
 			Authority::allow('delete', 'playlist_entry', function($playlist_entry) use ($user)
