@@ -58,9 +58,19 @@
 							<li class="{{ URI::is('people*') ? 'active' : '' }}">
 								<a href="{{URL::to_route('people');}}">People</a>
 							</li>
-							<li class="{{ URI::is('playlist*') ? 'active' : '' }}">
-								<a href="{{URL::to_route('playlist');}}">Playlist</a>
-							</li>
+							@if(Authority::can('display','playlist_screen'))
+								<li class="dropdown{{ URI::is('playlist*') ? ' active' : '' }}">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Playlist <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="{{URL::to_route('playlist');}}">Playlist</a></li>
+										<li><a href="{{URL::to_action('playlist@screen');}}">Screen</a></li>
+									</ul>
+								</li>
+							@else							
+								<li class="{{ URI::is('playlist*') ? 'active' : '' }}">
+									<a href="{{URL::to_route('playlist');}}">Playlist</a>
+								</li>
+							@endif
 							@include('partials.info')
 
 						</ul>
