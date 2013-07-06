@@ -9,22 +9,21 @@ more enjoyable for attendees and organisers alike.
 
 ### For Attendees
 * Make it easy to find out what's going on and join in
-	* [Games in progress](http://i.imgur.com/xbN2R.png) with direct join links
-	* Tournaments & events
-	* [Shouts](http://i.imgur.com/tixUA.png)
-	* Files e.g. game mods and patches
+	* [Games in progress](http://zeropingheroes.co.uk/wp-content/gallery/lanager/tixua.png) with direct join links
+	* [Events](http://zeropingheroes.co.uk/wp-content/gallery/lanager/timetable.png) & tournaments
+	* [Shouts](http://zeropingheroes.co.uk/wp-content/gallery/lanager/tixua.png)
+	* [Files](http://zeropingheroes.co.uk/wp-content/gallery/lanager/files.png) e.g. game mods and patches
 * Enhance the social aspect of LAN parties
-	* [Attendee profiles](http://i.imgur.com/P5gaT.png) with Steam add/message links
-	* [List of attendees](http://i.imgur.com/IBlHK.png) with people's seating location etc
-* Find out important venue/event information
-	* Eating & sleeping
-	* Event rules
+	* [Attendee profiles](http://zeropingheroes.co.uk/wp-content/gallery/lanager/p5gat.png) with Steam add/message links
+	* [List of attendees](http://zeropingheroes.co.uk/wp-content/gallery/lanager/iblhk.png) with people's seating location etc
+* Let attendees find out important venue/event information
+	* [Info pages](http://zeropingheroes.co.uk/wp-content/gallery/lanager/info.png) easily editable for displaying things like where to sleep etc
 * Give attendees a voice during the event
-	* Request music
-	* Suggest games & tournaments
+	* [Request music & videos](http://zeropingheroes.co.uk/wp-content/gallery/lanager/playlist.png) for playout on a big screen
+	* [Watch & listen](http://zeropingheroes.co.uk/wp-content/gallery/lanager/playlist_screen.png) to requested music & videos
 
 ### For Organisers
-* Make it easy to get information out to attendees
+* Make it easy to get information out to attendees via [Info pages](http://zeropingheroes.co.uk/wp-content/gallery/lanager/info.png) and [Shouts](http://zeropingheroes.co.uk/wp-content/gallery/lanager/tixua.png)
 * Encourage socialising and participation
 * Get instant feedback from attendees
 
