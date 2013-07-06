@@ -1,7 +1,7 @@
 <table id="playlist">
 	<tbody>
 	@forelse ($playlist_entries->results as $entry)
-		<tr class="playlist_entry{{ ($entry->playback_state == (1 OR 2)) ? ' entry_now_playing' : ''}}">
+		<tr class="playlist_entry{{ ($entry->playback_state == 1 OR $entry->playback_state == 2) ? ' entry_now_playing' : ''}}">
 			<td class="playlist_entry_user">
 				<a href="{{URL::to_action('user@profile',$entry->user->id)}}"><img src="{{$entry->user->avatar_small}}" title="{{ e($entry->user->username) }}"></a>
 			</td>
