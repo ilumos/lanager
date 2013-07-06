@@ -66,14 +66,14 @@ class Playlist_Controller extends Base_Controller {
 
 	public function action_get_entry() 	// Get current playlist entry and its playback state
 	{
-		$playlist_entry = LANager\Playlist_entry::with('user')
+		$playlist_entry = LANager\Playlist_entry::with('user') // no getter methods available :(
 												->where('playback_state', '=', 2) // paused entries
 												->or_where('playback_state', '=', 1) // playing entries
 												->or_where('playback_state', '=', 0) // unplayed entries
 												->order_by('playback_state', 'desc') // order: paused, playing, unplayed
 												->order_by('created_at', 'asc') // secondary order: oldest to newest
 												->first();
-		if(!empty($playlist_entry))	return Response::eloquent($playlist_entry); // return playlist entry  as JSON
+		if(!empty($playlist_entry))	return Response::eloquent($playlist_entry); // return playlist entry as JSON
 
 	}
 

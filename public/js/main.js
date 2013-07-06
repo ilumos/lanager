@@ -130,6 +130,6 @@ function onErrorHandler(errorNum)
 function updateNowPlaying(entry)
 {
 	console.log('Playlist: Updating now playing display');
-	nowPlaying = '<img src="'+entry.user.avatar_small+'"> '+entry.user.username+': <strong>'+entry.title+'</strong>';
+	nowPlaying = '<img src="'+entry.user.avatar+'"> '+entry.user.username+': <strong>'+entry.title+'</strong>';
 	$('div#now_playing').html(nowPlaying);
 }
