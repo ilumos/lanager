@@ -9,7 +9,7 @@ more enjoyable for attendees and organisers alike.
 
 ### For Attendees
 * Make it easy to find out what's going on and join in
-	* [Games in progress](http://zeropingheroes.co.uk/wp-content/gallery/lanager/tixua.png) with direct join links
+	* [Games in progress](http://zeropingheroes.co.uk/wp-content/gallery/lanager/xbn2r.png) with direct join links
 	* [Events](http://zeropingheroes.co.uk/wp-content/gallery/lanager/timetable.png) & tournaments
 	* [Shouts](http://zeropingheroes.co.uk/wp-content/gallery/lanager/tixua.png)
 	* [Files](http://zeropingheroes.co.uk/wp-content/gallery/lanager/files.png) e.g. game mods and patches
