@@ -66,3 +66,29 @@ more enjoyable for attendees and organisers alike.
 	* [Fork the project](https://github.com/ilumos/lanager/fork) and add the features you want to see
 	* Work on new features / bug fixes in the [issue tracker](https://github.com/ilumos/lanager/issues)
 	* Or if you're really hardcore, request commit access 
+
+### Quickstart using Vagrant
+
+Vagrant is a VM configuration tool. You can use it to very quickly retrieve,
+start, and automatically configure a VirtualBox VM for development or even
+production. This has been tested on OSX, but should work fine on any platform
+that Vagrant supports.
+
+1. Install [Vagrant](http://downloads.vagrantup.com) and
+   [VirtualBox](https://www.virtualbox.org/wiki/Downloads).
+2. Within the `lanager` directory, in a terminal or command prompt, execute
+   `vagrant up`. Vagrant will automatically download a VM image and configure
+   it.
+3. Follow the instructions that follow the configuration process to populate the
+   database. This step is not performed automatically.
+4. Ensure that you've added `127.0.0.1 lanager.dev` to your hosts file. This is
+   `/etc/hosts` on Unix-y platforms and `C:\WINDOWS\system32\etc\drivers\hosts`
+   on Windows.
+5. Visit `http://lanager.dev:8080` in your browser and develop away!
+
+You can SSH into the machine with `vagrant ssh`. The project files are in
+`~/lanager`, which is symlinked to `/vagrant`. `/vagrantcache` is a convenient
+place to store any large files you don't want to lose between vagrant images.
+You can shutdown the VM with `vagrant halt`, or destroy it completely with
+`vagrant destroy`. Note that destroying it will remove any files on it that are
+not in the project directory or cache directory.
