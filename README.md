@@ -40,7 +40,7 @@ more enjoyable for attendees and organisers alike.
 *This section is a work in progress*
 
 * Download and unzip
-* [Configure your server for Laravel](http://www.laravel.com/docs/install)
+* [Configure your server for Laravel](http://www.laravel.com/docs/installation)
 	* [Make the "lanager/public/" directory your site's DocumentRoot](http://www.laravel.com/docs/install#server-configuration) - protecting other Laravel system and configuration files
 	* Set the value of the key option in the config/application.php file to a random, 32 character string
 	* Make the storage/ directory writable (chmod 777 -R lanager/storage/)
