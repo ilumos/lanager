@@ -32,8 +32,16 @@ class JsonResponse extends Response
             $data = new \ArrayObject();
         }
 
+		// JSON_NUMERIC_CHECK is only defined in PHP 5.3.3, but we
+		// add it if it is available
+		$flags = 0;
+		if (defined('JSON_NUMERIC_CHECK'))
+		{
+			$flags = JSON_NUMERIC_CHECK;
+		}
+
         parent::__construct(
-            json_encode($data),
+            json_encode($data, $flags),
             $status,
             array_merge(array('Content-Type' => 'application/json'), $headers)
         );

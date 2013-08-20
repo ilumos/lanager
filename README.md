@@ -31,7 +31,7 @@ more enjoyable for attendees and organisers alike.
 ## Requirements
 * Windows / Linux / OSX
 * Web server (Apache, ngix and others)
-* PHP 5.3
+* PHP 5.3.3+
 * MySQL
 
 *WAMP, LAMP and MAMP are a quick way to satisfy the above, just check that the version you download includes PHP 5.3* 
