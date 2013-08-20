@@ -3,3 +3,6 @@ for contributing to the LANager project.
 
 Main Authors:
 Oliver Baker <ilumos@gmail.com>
+
+Contributors:
+Colin Dean <git@cad.cx>
