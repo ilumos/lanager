@@ -14,7 +14,11 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -o dir::cache::archives="/vagrantcac
 echo "CREATE DATABASE lanager;" | mysql
 echo "CREATE USER 'lanager'@'localhost' IDENTIFIED BY 'vrfRB9PLEAYzw5UH';" | mysql
 echo "GRANT ALL PRIVILEGES ON  lanager.* TO  'lanager'@'localhost' WITH GRANT OPTION;" | mysql
+echo "CREATE USER 'lanager'@'%' IDENTIFIED BY 'vrfRB9PLEAYzw5UH';" | mysql
+echo "GRANT ALL PRIVILEGES ON  lanager.* TO  'lanager'@'%' WITH GRANT OPTION;" | mysql
 mysqladmin -u root password vagrant
+sed -i 's/bind-address/;bind-address/g' /etc/mysql/my.cnf # bind to all nics for external access
+sudo service mysql restart
 ## configure apache
 sudo a2enmod rewrite
 echo "<VirtualHost *:80>
@@ -60,7 +64,7 @@ echo "######################"
 echo "# START READING HERE #"
 echo "######################"
 echo
-echo "The DSN is mysql://lanager:vrfRB9PLEAYzw5UH@localhost/lanager".
+echo "The DSN is mysql://lanager:vrfRB9PLEAYzw5UH@localhost:3307/lanager".
 echo
 echo "Ensure that you have configured lanager.dev to point to 127.0.0.1"
 echo "in your hosts file, and you should be able to access the VM from"
