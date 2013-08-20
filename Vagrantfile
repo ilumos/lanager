@@ -73,7 +73,7 @@ SCRIPT
 
 Vagrant.configure("2") do |config|
   config.vm.guest = :linux
-  config.vm.hostname = "lanager.dev"
+  #config.vm.hostname = "lanager.dev"
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
   #8080->80 for web, 3307->3306 for mysql
