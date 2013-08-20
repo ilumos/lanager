@@ -23,6 +23,7 @@ function pollPlaylist()
 	{
 		if(entry)
 		{
+			console.log('Playlist: Polling: Response OK');
 			// new entry, or entry skipped/deleted
 			if(entry.video_id != nowPlayingId)
 			{
@@ -34,6 +35,7 @@ function pollPlaylist()
 			}
 			if(entry.playback_state != currentPlaybackState)
 			{
+				console.log('Playlist: Polling: Playback state changed from '+currentPlaybackState+' to '+entry.playback_state+' (uid:'+entry.id+')');				
 				switch(entry.playback_state)
 				{
 					case 0: // unplayed
@@ -51,12 +53,14 @@ function pollPlaylist()
 						yt_player.pauseVideo();
 						currentPlaybackState = 2;
 						break;
+					default:
+						console.log('Playlist: Polling: ERROR - Playback state out of range');
 				}
 			}
 		}
 		else
 		{
-			console.log('Playlist: Error polling - no response');
+			console.log('Playlist: Polling: ERROR - No response');
 		}
 	});
 	setTimeout(pollPlaylist,2000);
