@@ -72,22 +72,29 @@ class User_Controller extends Base_Controller {
 
 	public function action_profile($user_id) // Display a given user's profile
 	{
-		// Retrieve the user (if they exist)
+		// Attempt to retrieve the user by lanager ID (if they exist)
 		if($user = LANager\User::find($user_id))
 		{
-			$steamProfile = new SteamProfile($user->steam_id_64);
-			$steamProfile->fetchProfile();
-			return View::make('user.profile')
-						->with('title',$user->username)
-						->with('user',$user)
-						->with('steamProfile',$steamProfile)
-						->with('shouts',$user->shouts()->order_by('id', 'desc')->paginate(10)); // recent shouts
+			// continue
 		}
-		else
+		elseif($user = LANager\User::where('steam_id_64', '=', $user_id)->first())
+		{
+			// continue
+		}
+		else // user not found by either ID type
 		{
 			return Response::error('404');
 		}
-	}
+		
+		// Show profile
+		$steamProfile = new SteamProfile($user->steam_id_64);
+		$steamProfile->fetchProfile();
+		return View::make('user.profile')
+					->with('title',$user->username)
+					->with('user',$user)
+					->with('steamProfile',$steamProfile)
+					->with('shouts',$user->shouts()->order_by('id', 'desc')->paginate(10)); // recent shouts
+		}
 
 
 	public function action_list() // Show a paginated user list
