@@ -6,7 +6,13 @@
 				<a href="{{URL::to_action('user@profile',$entry->user->id)}}"><img src="{{$entry->user->avatar_small}}" title="{{ e($entry->user->username) }}"></a>
 			</td>
 			<td class="playlist_entry_duration">
-				{{ e(intval(gmdate('i',$entry->duration)).':'.gmdate('s',$entry->duration)) }}
+				@if($entry->duration >= 3600)
+					{{ e(intval(gmdate('H',$entry->duration)).'h '.intval(gmdate('i',$entry->duration)).'m '.intval(gmdate('s',$entry->duration)).'s') }}
+				@elseif($entry->duration >= 60)
+					{{ e(intval(gmdate('i',$entry->duration)).'m '.intval(gmdate('s',$entry->duration)) .'s') }}
+				@else
+					{{ e(intval(gmdate('s',$entry->duration)) .'s') }}
+				@endif
 			</td>
 			<td class="playlist_entry_title">
 				{{ e($entry->title) }}
