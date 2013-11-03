@@ -4,12 +4,15 @@
 # Get Vagrant from http://downloads.vagrantup.com/
 $script = <<SCRIPT
 if [ ! -f "$HOME/.provisioned" ]; then
+
 # setup the server
+
 ## install dependencies like php, mysql, and apache
 sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y update
 #sudo DEBIAN_FRONTEND=noninteractive apt-get -q -y upgrade
 sudo DEBIAN_FRONTEND=noninteractive apt-get -o dir::cache::archives="/vagrantcache/apt" -o Dpkg::Options::='--force-confnew' -f -q -y install \
   libapache2-mod-php5 php-pear php5-cli php5-mysql php5-mcrypt mysql-server curl git vim
+
 ## configure mysql
 echo "CREATE DATABASE lanager;" | mysql
 echo "CREATE USER 'lanager'@'localhost' IDENTIFIED BY 'vrfRB9PLEAYzw5UH';" | mysql
@@ -19,6 +22,7 @@ echo "GRANT ALL PRIVILEGES ON  lanager.* TO  'lanager'@'%' WITH GRANT OPTION;" |
 mysqladmin -u root password vagrant
 sed -i 's/bind-address/;bind-address/g' /etc/mysql/my.cnf # bind to all nics for external access
 sudo service mysql restart
+
 ## configure apache
 sudo a2enmod rewrite
 echo "<VirtualHost *:80>
@@ -45,20 +49,27 @@ sudo chown -R www-data:www-data /var/log/apache2/lanager.dev
 sudo a2ensite lanager.dev
 sudo a2dissite default
 sudo service apache2 restart
+
 # setup php
 ## install composer
 curl -sS https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin
 sudo ln /usr/local/bin/composer.phar /usr/local/bin/composer
 sudo chmod +x /usr/local/bin/composer.phar
-#####COMPOSER_NO_INTERACTION=1 composer -n create-project laravel/laravel 
-######not necessary because lanager includes laravel-3.2 entirely
-# setup some conveniences
+
+# mount shared directory
 ln -s /vagrant /home/vagrant/lanager
+
+# install laravel and dependencies
+cd /home/vagrant/lanager
+composer install
+
+# set vm as provisioned
 touch $HOME/.provisioned
 else
   echo "Already provisioned."
 fi
+
 echo
 echo "######################"
 echo "# START READING HERE #"
@@ -80,11 +91,14 @@ Vagrant.configure("2") do |config|
   #config.vm.hostname = "lanager.dev"
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+  
   #8080->80 for web, 3307->3306 for mysql
   config.vm.network :forwarded_port, guest: 80, host: 8080
   config.vm.network :forwarded_port, guest: 3306, host: 3307
+  
   #see the top of this file
   config.vm.provision :shell, :inline => $script
+  
   #used primarily for apt installs and upgrades, useful for working on the
   #vagrant box itself
   config.vm.synced_folder ".vagrantcache/", "/vagrantcache/"
